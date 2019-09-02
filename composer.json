@@ -14,15 +14,6 @@
         "infection/infection": "^0.13",
         "orchestra/testbench": "^3.8"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../JsonApi-Assert",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "authors": [
         {
             "name": "Vincent Girol",
