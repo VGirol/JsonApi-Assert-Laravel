@@ -37,10 +37,9 @@
             "@setup"
         ],
         "test": "./vendor/bin/phpunit tests ",
-        "coverage": "./vendor/bin/phpunit tests --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
-        "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist",
+        "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist --min-msi=70 --min-covered-msi=70",
         "travis": [
-            "@coverage",
+            "@test",
             "@infection"
         ],
         "build": [
