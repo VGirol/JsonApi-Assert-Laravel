@@ -22,8 +22,6 @@ use VGirol\JsonApiAssert\Laravel\Asserts\Response\AssertUpdated;
  */
 class Assert extends JsonApiAssert
 {
-    use HeaderTrait;
-
     use AssertErrorResponse;
     use AssertNoContent;
     use AssertCreated;

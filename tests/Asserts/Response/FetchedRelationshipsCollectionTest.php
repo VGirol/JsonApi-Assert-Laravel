@@ -1,11 +1,14 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedRelationshipsCollectionTest extends TestCase
 {
@@ -20,9 +23,10 @@ class FetchedRelationshipsCollectionTest extends TestCase
             'data' => []
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = HelperFactory::create('collection', collect([]), $this->resourceType, $this->routeName, true)->toArray();
+        $resourceType = 'dummy';
+        $expected = Generator::getInstance()->riCollection(collect([]), $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -36,15 +40,16 @@ class FetchedRelationshipsCollectionTest extends TestCase
     public function responseFetchedToManyRelationships()
     {
         $strict = false;
+        $resourceType = 'dummy';
         $collection = $this->createCollection();
         $status = 200;
         $content = [
-            'data' => $this->createResourceCollection($collection, true, null)
+            'data' => $this->createResourceCollection($collection, $resourceType, true, null)
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = HelperFactory::create('collection', $collection, $this->resourceType, $this->routeName, true)->toArray();
+        $expected = Generator::getInstance()->riCollection($collection, $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -76,17 +81,18 @@ class FetchedRelationshipsCollectionTest extends TestCase
     {
         $status = 200;
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
+        $resourceType = 'dummy';
         $collection = $this->createCollection();
-        $expected = HelperFactory::create('collection', $collection, $this->resourceType, $this->routeName, true)->toArray();
+        $expected = Generator::getInstance()->riCollection($collection, $resourceType)->toArray();
 
         return [
             'wrong status' => [
                 400,
                 $headers,
                 [
-                    'data' => $this->createResourceCollection($collection, true, null)
+                    'data' => $this->createResourceCollection($collection, $resourceType, true, null)
                 ],
                 $expected,
                 false,
@@ -96,7 +102,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
                 $status,
                 [],
                 [
-                    'data' => $this->createResourceCollection($collection, true, null)
+                    'data' => $this->createResourceCollection($collection, $resourceType, true, null)
                 ],
                 $expected,
                 false,
@@ -106,7 +112,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
                 $status,
                 $headers,
                 [
-                    'data' => $this->createResourceCollection($collection, true, null),
+                    'data' => $this->createResourceCollection($collection, $resourceType, true, null),
                     'anything' => 'not valid'
                 ],
                 $expected,
@@ -131,7 +137,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
                 $status,
                 $headers,
                 [
-                    'data' => $this->createResourceCollection($collection, true, 'value')
+                    'data' => $this->createResourceCollection($collection, $resourceType, true, 'value')
                 ],
                 $expected,
                 false,

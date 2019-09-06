@@ -1,11 +1,14 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class UpdatedTest extends TestCase
 {
@@ -17,7 +20,7 @@ class UpdatedTest extends TestCase
     {
         $status = 200;
         $headers = [
-            static::$headerName => [static::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
@@ -35,12 +38,13 @@ class UpdatedTest extends TestCase
             ]
         ];
 
+        $resourceType = 'dummy';
         $model = $this->createModel();
         $content = [
-            'data' => $this->createResource($model, false, null, $additional)
+            'data' => $this->createResource($model, $resourceType, false, null, $additional)
         ];
 
-        $expected = HelperFactory::create('resource-object', $model, $this->resourceType, $this->routeName)
+        $expected = Generator::getInstance()->resourceObject($model, $resourceType)
             ->addLink('self', $selfUrl)
             ->toArray();
 
@@ -78,18 +82,19 @@ class UpdatedTest extends TestCase
 
     public function responseUpdatedFailedProvider()
     {
+        $resourceType = 'dummy';
         $model = $this->createModel();
 
-        $expected = HelperFactory::create('resource-object', $model, $this->resourceType, $this->routeName)->toArray();
+        $expected = Generator::getInstance()->resourceObject($model, $resourceType)->toArray();
 
         return [
             'wrong status code' => [
                 202,
                 [
-                    static::$headerName => [static::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'data' => $this->createResource($model, false)
+                    'data' => $this->createResource($model, $resourceType, false, null, null)
                 ],
                 $expected,
                 false,
@@ -99,7 +104,7 @@ class UpdatedTest extends TestCase
                 200,
                 [],
                 [
-                    'data' => $this->createResource($model, false)
+                    'data' => $this->createResource($model, $resourceType, false, null, null)
                 ],
                 $expected,
                 false,
@@ -108,10 +113,10 @@ class UpdatedTest extends TestCase
             'no valid structure' => [
                 200,
                 [
-                    static::$headerName => [static::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'data' => $this->createResource($model, false, 'structure')
+                    'data' => $this->createResource($model, $resourceType, false, 'structure', null)
                 ],
                 $expected,
                 false,
@@ -120,7 +125,7 @@ class UpdatedTest extends TestCase
             'no meta nor data member' => [
                 200,
                 [
-                    static::$headerName => [static::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -138,10 +143,10 @@ class UpdatedTest extends TestCase
             'data attributes member not valid' => [
                 200,
                 [
-                    static::$headerName => [static::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'data' => $this->createResource($model, false, 'value')
+                    'data' => $this->createResource($model, $resourceType, false, 'value', null)
                 ],
                 $expected,
                 false,

@@ -12,12 +12,27 @@
     },
     "require-dev": {
         "infection/infection": "^0.13",
-        "orchestra/testbench": "^3.8"
+        "orchestra/testbench": "^3.8",
+        "vgirol/jsonapi-faker-laravel": "dev-master"
     },
     "repositories": [
         {
             "type": "path",
             "url": "../JsonApi-Assert",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../JsonApi-Faker",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../JsonApi-Faker-Laravel",
             "options": {
                 "symlink": true
             }
@@ -46,10 +61,9 @@
             "@setup"
         ],
         "test": "./vendor/bin/phpunit tests ",
-        "coverage": "./vendor/bin/phpunit tests --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
         "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist",
         "travis": [
-            "@coverage",
+            "@test",
             "@infection"
         ],
         "build": [

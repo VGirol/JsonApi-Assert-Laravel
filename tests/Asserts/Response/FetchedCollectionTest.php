@@ -1,11 +1,14 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedCollectionTest extends TestCase
 {
@@ -15,15 +18,16 @@ class FetchedCollectionTest extends TestCase
     public function responseFetchedCollection()
     {
         $strict = false;
+        $resourceType = 'dummy';
         $collection = $this->createCollection();
         $status = 200;
         $content = [
-            'data' => $this->createResourceCollection($collection, false, null)
+            'data' => $this->createResourceCollection($collection, $resourceType, false, null)
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = HelperFactory::create('collection', $collection, $this->resourceType, $this->routeName, false)->toArray();
+        $expected = Generator::getInstance()->roCollection($collection, $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -53,19 +57,20 @@ class FetchedCollectionTest extends TestCase
 
     public function responseFetchedCollectionFailedProvider()
     {
+        $resourceType = 'dummy';
         $collection = $this->createCollection();
         $status = 200;
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = HelperFactory::create('collection', $collection, $this->resourceType, $this->routeName, false)->toArray();
+        $expected = Generator::getInstance()->roCollection($collection, $resourceType)->toArray();
 
         return [
             'bad status' => [
                 400,
                 $headers,
                 [
-                    'data' => $this->createResourceCollection($collection, false, null)
+                    'data' => $this->createResourceCollection($collection, $resourceType, false, null)
                 ],
                 $expected,
                 false,
@@ -75,7 +80,7 @@ class FetchedCollectionTest extends TestCase
                 $status,
                 [],
                 [
-                    'data' => $this->createResourceCollection($collection, false, null)
+                    'data' => $this->createResourceCollection($collection, $resourceType, false, null)
                 ],
                 $expected,
                 false,
@@ -85,7 +90,7 @@ class FetchedCollectionTest extends TestCase
                 $status,
                 $headers,
                 [
-                    'data' => $this->createResourceCollection($collection, false, null),
+                    'data' => $this->createResourceCollection($collection, $resourceType, false, null),
                     'anything' => 'not valid'
                 ],
                 $expected,
@@ -110,7 +115,7 @@ class FetchedCollectionTest extends TestCase
                 $status,
                 $headers,
                 [
-                    'data' => $this->createResourceCollection($collection, false, 'value'),
+                    'data' => $this->createResourceCollection($collection, $resourceType, false, 'value'),
                     'anything' => 'not valid'
                 ],
                 $expected,
