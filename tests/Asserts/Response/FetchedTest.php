@@ -1,12 +1,14 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
-use VGirol\JsonApiAssert\Laravel\Tests\Tools\Models\DummyModel;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedTest extends TestCase
 {
@@ -15,29 +17,25 @@ class FetchedTest extends TestCase
      */
     public function responseFetchedSingleResource()
     {
-        $model = new DummyModel([
-            'TST_ID' => 3,
-            'TST_NAME' => 'test',
-            'TST_NUMBER' => 123,
-            'TST_CREATION_DATE' => '01-01-1970'
-        ]);
+        $resourceType = 'dummy';
+        $model = $this->createModel();
 
         $status = 200;
         $content = [
             'data' => [
-                'type' => $this->resourceType,
+                'type' => $resourceType,
                 'id' => strval($model->getKey()),
                 'attributes' => $model->toArray()
             ]
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $expected = HelperFactory::create('resource-object', $model, $this->resourceType, $this->routeName)->toArray();
+        $expected = Generator::getInstance()->resourceObject($model, $resourceType)->toArray();
 
         $response->assertJsonApiFetchedSingleResource($expected);
     }
@@ -58,24 +56,20 @@ class FetchedTest extends TestCase
 
     public function responseFetchedSingleResourceFailedProvider()
     {
-        $model = new DummyModel([
-            'TST_ID' => 10,
-            'TST_NAME' => 'name',
-            'TST_NUMBER' => 123,
-            'TST_CREATION_DATE' => null
-        ]);
+        $resourceType = 'dummy';
+        $model = $this->createModel();
 
-        $expected = HelperFactory::create('resource-object', $model, $this->resourceType, $this->routeName)->toArray();
+        $expected = Generator::getInstance()->resourceObject($model, $resourceType)->toArray();
 
         return [
             'bad status' => [
                 400,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'data' => [
-                        'type' => $this->resourceType,
+                        'type' => $resourceType,
                         'id' => strval($model->getKey()),
                         'attributes' => $model->getAttributes()
                     ]
@@ -88,7 +82,7 @@ class FetchedTest extends TestCase
                 [],
                 [
                     'data' => [
-                        'type' => $this->resourceType,
+                        'type' => $resourceType,
                         'id' => strval($model->getKey()),
                         'attributes' => $model->getAttributes()
                     ]
@@ -99,11 +93,11 @@ class FetchedTest extends TestCase
             'no valid structure' => [
                 200,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'data' => [
-                        'type' => $this->resourceType,
+                        'type' => $resourceType,
                         'id' => strval($model->getKey()),
                         'attributes' => $model->getAttributes(),
                         'anything' => 'not valid'
@@ -115,7 +109,7 @@ class FetchedTest extends TestCase
             'no data member' => [
                 200,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -130,11 +124,11 @@ class FetchedTest extends TestCase
             'data attributes member not valid' => [
                 200,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'data' => [
-                        'type' => $this->resourceType,
+                        'type' => $resourceType,
                         'id' => strval($model->getKey()),
                         'attributes' => [
                             'TST_ID' => $model->getKey(),

@@ -1,8 +1,10 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
 
@@ -25,7 +27,7 @@ class ErrorsTest extends TestCase
             'errors' => $errors
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
@@ -54,7 +56,7 @@ class ErrorsTest extends TestCase
             'wrong status code' => [
                 400,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -88,7 +90,7 @@ class ErrorsTest extends TestCase
             'not valid structure' => [
                 404,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -109,7 +111,7 @@ class ErrorsTest extends TestCase
             'no errors member' => [
                 404,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'meta' => [
@@ -123,7 +125,7 @@ class ErrorsTest extends TestCase
             'not enough errors' => [
                 404,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -152,7 +154,7 @@ class ErrorsTest extends TestCase
             'expected error not present' => [
                 404,
                 [
-                    self::$headerName => [self::$mediaType]
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -183,7 +185,7 @@ class ErrorsTest extends TestCase
     {
         $status = 404;
         $headers = [
-            'Content-Type' => [self::$mediaType]
+            'Content-Type' => [HttpHeader::MEDIA_TYPE]
         ];
         $content = [
             'errors' => [

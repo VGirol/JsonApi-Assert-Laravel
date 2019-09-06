@@ -1,8 +1,10 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 
 class BadRequestTest extends TestCase
@@ -24,7 +26,7 @@ class BadRequestTest extends TestCase
             'errors' => $errors
         ];
         $headers = [
-            'Content-Type' => [self::$mediaType]
+            'Content-Type' => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
@@ -53,7 +55,7 @@ class BadRequestTest extends TestCase
             'bad status' => [
                 412,
                 [
-                    'Content-Type' => [self::$mediaType]
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -76,7 +78,7 @@ class BadRequestTest extends TestCase
             'bad header' => [
                 406,
                 [
-                    'Content-Type' => [self::$mediaType . '; param=value']
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE . '; param=value']
                 ],
                 [
                     'errors' => [
@@ -99,7 +101,7 @@ class BadRequestTest extends TestCase
             'no errors member' => [
                 406,
                 [
-                    'Content-Type' => [self::$mediaType]
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE]
                 ],
                 [],
                 [
@@ -114,7 +116,7 @@ class BadRequestTest extends TestCase
             'no error' => [
                 406,
                 [
-                    'Content-Type' => [self::$mediaType]
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => []
@@ -148,7 +150,7 @@ class BadRequestTest extends TestCase
             'errors' => $errors
         ];
         $headers = [
-            'Content-Type' => [self::$mediaType]
+            'Content-Type' => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
@@ -177,7 +179,7 @@ class BadRequestTest extends TestCase
             'bad status' => [
                 412,
                 [
-                    'Content-Type' => [self::$mediaType]
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -200,7 +202,7 @@ class BadRequestTest extends TestCase
             'bad header' => [
                 415,
                 [
-                    'Content-Type' => [self::$mediaType . '; param=value']
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE . '; param=value']
                 ],
                 [
                     'errors' => [
@@ -240,7 +242,7 @@ class BadRequestTest extends TestCase
             'errors' => $errors
         ];
         $headers = [
-            'Content-Type' => [self::$mediaType]
+            'Content-Type' => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
@@ -269,7 +271,7 @@ class BadRequestTest extends TestCase
             'bad status' => [
                 412,
                 [
-                    'Content-Type' => [self::$mediaType]
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
                     'errors' => [
@@ -286,7 +288,7 @@ class BadRequestTest extends TestCase
             'bad header' => [
                 404,
                 [
-                    'Content-Type' => [self::$mediaType . '; param=value']
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE . '; param=value']
                 ],
                 [
                     'errors' => [
@@ -303,7 +305,7 @@ class BadRequestTest extends TestCase
             'no errors member' => [
                 404,
                 [
-                    'Content-Type' => [self::$mediaType]
+                    'Content-Type' => [HttpHeader::MEDIA_TYPE]
                 ],
                 [],
                 'description',

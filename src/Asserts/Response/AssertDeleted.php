@@ -4,6 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Members;
 
 /**
@@ -27,8 +28,8 @@ trait AssertDeleted
     ) {
         $response->assertStatus(200);
         $response->assertHeader(
-            static::$headerName,
-            static::$mediaType
+            HttpHeader::HEADER_NAME,
+            HttpHeader::MEDIA_TYPE
         );
 
         // Decode JSON response
@@ -50,7 +51,7 @@ trait AssertDeleted
 
         // Checks meta object
         $meta = $json[Members::META];
-        if (!is_null($expectedMeta)) {
+        if ($expectedMeta !== null) {
             PHPUnit::assertEquals(
                 $expectedMeta,
                 $meta

@@ -72,7 +72,7 @@ trait AssertPagination
         // Decode JSON response
         $json = $response->json();
 
-        if (!is_null($path)) {
+        if ($path !== null) {
             $json = static::getJsonFromPath($json, $path);
         }
 

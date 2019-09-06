@@ -3,40 +3,25 @@
 use Illuminate\Foundation\Testing\TestResponse;
 use VGirol\JsonApiAssert\Laravel\Assert;
 
-TestResponse::macro(
-    'assertJsonApiFetchedSingleResource',
-    function ($expected, $strict = false) {
-        Assert::assertFetchedSingleResourceResponse($this, $expected, $strict);
-    }
-);
+TestResponse::macro('assertJsonApiFetchedSingleResource', function ($expected, $strict = false) {
+    Assert::assertFetchedSingleResourceResponse($this, $expected, $strict);
+});
 
-TestResponse::macro(
-    'assertJsonApiFetchedResourceCollection',
-    function ($expected, $strict = false) {
-        Assert::assertFetchedResourceCollectionResponse($this, $expected, $strict);
-    }
-);
+TestResponse::macro('assertJsonApiFetchedResourceCollection', function ($expected, $strict = false) {
+    Assert::assertFetchedResourceCollectionResponse($this, $expected, $strict);
+});
 
-TestResponse::macro(
-    'assertJsonApiFetchedRelationships',
-    function ($expected, $strict = false) {
-        Assert::assertFetchedRelationshipsResponse($this, $expected, $strict);
-    }
-);
+TestResponse::macro('assertJsonApiFetchedRelationships', function ($expected, $strict = false) {
+    Assert::assertFetchedRelationshipsResponse($this, $expected, $strict);
+});
 
-TestResponse::macro(
-    'assertJsonApiPagination',
-    function ($expectedLinks, $expectedMeta) {
-        Assert::assertResponseHasPagination($this, $expectedLinks, $expectedMeta);
-    }
-);
+TestResponse::macro('assertJsonApiPagination', function ($expectedLinks, $expectedMeta) {
+    Assert::assertResponseHasPagination($this, $expectedLinks, $expectedMeta);
+});
 
-TestResponse::macro(
-    'assertJsonApiNoPagination',
-    function () {
-        Assert::assertResponseHasNoPagination($this);
-    }
-);
+TestResponse::macro('assertJsonApiNoPagination', function () {
+    Assert::assertResponseHasNoPagination($this);
+});
 
 // TestResponse::macro('assertJsonApiPaginationLinks', function ($expected) {
 //     Assert::assertPaginationLinks($this, $expected);

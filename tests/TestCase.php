@@ -2,20 +2,15 @@
 
 namespace VGirol\JsonApiAssert\Laravel\Tests;
 
-use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use VGirol\JsonApiAssert\Laravel\HeaderTrait;
 use VGirol\JsonApiAssert\Laravel\JsonApiAssertServiceProvider;
-use VGirol\JsonApiAssert\Laravel\Tests\Tools\Models\DummyModel;
 use VGirol\JsonApiAssert\SetExceptionsTrait;
+use VGirol\JsonApiFaker\Laravel\Testing\CanCreateFake;
 
 abstract class TestCase extends BaseTestCase
 {
-    use HeaderTrait;
     use SetExceptionsTrait;
-
-    public $resourceType = 'dummy';
-    public $routeName = 'dummy';
+    use CanCreateFake;
 
     /**
      * Load package service provider
@@ -28,118 +23,5 @@ abstract class TestCase extends BaseTestCase
         return [
             JsonApiAssertServiceProvider::class
         ];
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param integer $count
-     * @return Collection
-     */
-    protected function createCollection($count = 5): Collection
-    {
-        $collection = new Collection();
-        for ($i = 1; $i <= $count; $i++) {
-            $collection->push($this->createModel($i));
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param integer $index
-     * @return DummyModel
-     */
-    protected function createModel($index = 0): DummyModel
-    {
-        $attributes = [
-            'TST_ID' => 10 + $index,
-            'TST_NAME' => 'test' . $index,
-            'TST_NUMBER' => 1000 * $index + 123,
-            'TST_CREATION_DATE' => (2000 + $index) . '-01-01'
-        ];
-
-        $model = new DummyModel();
-        $model->setRawAttributes($attributes);
-
-        return $model;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param Collection $collection
-     * @param bool $isResourceIdentifier
-     * @param string|null $withError
-     * @return void
-     */
-    protected function createResourceCollection(Collection $collection, bool $isResourceIdentifier, ?string $withError = null): array
-    {
-        $data = [];
-        $index = rand(1, $collection->count() - 1);
-        foreach ($collection as $i => $model) {
-            array_push(
-                $data,
-                $this->createResource(
-                    $model,
-                    $isResourceIdentifier,
-                    (!is_null($withError) && ($i == $index)) ? $withError : null
-                )
-            );
-        }
-
-        return $data;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param DummyModel $model
-     * @param boolean $isResourceIdentifier
-     * @param string|null $withError
-     * @param array|null $additional
-     * @return array
-     */
-    protected function createResource($model, bool $isResourceIdentifier, ?string $withError = null, ?array $additional = null): array
-    {
-        $resource = [
-            'type' => $this->resourceType,
-            'id' => strval($model->getKey())
-        ];
-        if (!$isResourceIdentifier) {
-            $resource['attributes'] = $model->attributesToArray();
-        }
-        if (!is_null($withError)) {
-            switch ($withError) {
-                case 'value':
-                    $resource['id'] = strval($model->getKey() + 10);
-                    break;
-                case 'structure':
-                    $resource['id'] = intval($model->getKey());
-                    break;
-            }
-        }
-        if (!is_null($additional)) {
-            $resource = array_merge($resource, $additional);
-        }
-
-        return $resource;
-    }
-
-    protected function addErrorToResourceCollection($collection)
-    {
-        $index = rand(1, $collection->count() - 1);
-        $this->addErrorToResource($collection[$index]);
-
-        return $collection;
-    }
-
-    protected function addErrorToResource($resource)
-    {
-        $resource['id'] = strval(intval($resource['id']) + 10);
-
-        return $resource;
     }
 }

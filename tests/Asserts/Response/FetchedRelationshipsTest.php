@@ -1,11 +1,14 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedRelationshipsTest extends TestCase
 {
@@ -19,7 +22,7 @@ class FetchedRelationshipsTest extends TestCase
             'data' => null
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
         $response = Response::create(json_encode($content), $status, $headers);
@@ -34,15 +37,16 @@ class FetchedRelationshipsTest extends TestCase
     public function responseFetchedToOneRelationships()
     {
         $strict = false;
+        $resourceType = 'dummy';
         $model = $this->createModel();
         $status = 200;
         $content = [
-            'data' => $this->createResource($model, true, null)
+            'data' => $this->createResource($model, $resourceType, true, null)
         ];
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = HelperFactory::create('resource-identifier', $model, $this->resourceType)->toArray();
+        $expected = Generator::getInstance()->resourceIdentifier($model, $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -74,17 +78,18 @@ class FetchedRelationshipsTest extends TestCase
     {
         $status = 200;
         $headers = [
-            self::$headerName => [self::$mediaType]
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
+        $resourceType = 'dummy';
         $model = $this->createModel();
-        $expected = HelperFactory::create('resource-identifier', $model, $this->resourceType)->toArray();
+        $expected = Generator::getInstance()->resourceIdentifier($model, $resourceType)->toArray();
 
         return [
             'wrong status' => [
                 400,
                 $headers,
                 [
-                    'data' => $this->createResource($model, true, null)
+                    'data' => $this->createResource($model, $resourceType, true, null)
                 ],
                 $expected,
                 false,
@@ -94,7 +99,7 @@ class FetchedRelationshipsTest extends TestCase
                 $status,
                 [],
                 [
-                    'data' => $this->createResource($model, true, null)
+                    'data' => $this->createResource($model, $resourceType, true, null)
                 ],
                 $expected,
                 false,
@@ -104,7 +109,7 @@ class FetchedRelationshipsTest extends TestCase
                 $status,
                 $headers,
                 [
-                    'data' => $this->createResource($model, true, null),
+                    'data' => $this->createResource($model, $resourceType, true, null),
                     'anything' => 'not valid'
                 ],
                 $expected,
@@ -129,7 +134,7 @@ class FetchedRelationshipsTest extends TestCase
                 $status,
                 $headers,
                 [
-                    'data' => $this->createResource($model, true, 'value')
+                    'data' => $this->createResource($model, $resourceType, true, 'value')
                 ],
                 $expected,
                 false,

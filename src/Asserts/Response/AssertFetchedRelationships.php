@@ -3,6 +3,7 @@
 namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
+use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Members;
 
 /**
@@ -24,8 +25,8 @@ trait AssertFetchedRelationships
     {
         $response->assertStatus(200);
         $response->assertHeader(
-            static::$headerName,
-            static::$mediaType
+            HttpHeader::HEADER_NAME,
+            HttpHeader::MEDIA_TYPE
         );
 
         // Decode JSON response
