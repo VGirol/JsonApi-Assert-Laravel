@@ -1,6 +1,9 @@
 # JsonApi-Assert-Laravel
 
-test
+[![Build Status](https://travis-ci.org/VGirol/JsonApi-Assert-Laravel.svg?branch=master)](https://travis-ci.org/VGirol/JsonApi-Assert-Laravel)
+[![Code Coverage](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/?branch=master)
+[![Infection MSI](https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Assert-Laravel/master)](https://infection.github.io)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/?branch=master)
 
 This package adds a lot of methods to the [`Illuminate\Foundation\Testing\TestResponse`](https://laravel.com/api/5.8/Illuminate/Foundation/Testing/TestResponse.html) class for testing APIs that implements the [JSON:API specification](https://jsonapi.org/).
 
