@@ -27,7 +27,7 @@ class FetchedCollectionTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = Generator::getInstance()->roCollection($collection, $resourceType)->toArray();
+        $expected = (new Generator)->roCollection($collection, $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -63,7 +63,7 @@ class FetchedCollectionTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = Generator::getInstance()->roCollection($collection, $resourceType)->toArray();
+        $expected = (new Generator)->roCollection($collection, $resourceType)->toArray();
 
         return [
             'bad status' => [

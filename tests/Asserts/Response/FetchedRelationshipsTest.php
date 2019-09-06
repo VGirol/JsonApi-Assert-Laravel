@@ -46,7 +46,7 @@ class FetchedRelationshipsTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = Generator::getInstance()->resourceIdentifier($model, $resourceType)->toArray();
+        $expected = (new Generator)->resourceIdentifier($model, $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -82,7 +82,7 @@ class FetchedRelationshipsTest extends TestCase
         ];
         $resourceType = 'dummy';
         $model = $this->createModel();
-        $expected = Generator::getInstance()->resourceIdentifier($model, $resourceType)->toArray();
+        $expected = (new Generator)->resourceIdentifier($model, $resourceType)->toArray();
 
         return [
             'wrong status' => [

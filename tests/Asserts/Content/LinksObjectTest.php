@@ -88,7 +88,7 @@ class LinksObjectTest extends TestCase
     //         HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
     //     ];
 
-    //     $jsonapi = Generator::getInstance()
+    //     $jsonapi = (new Generator)
     //         ->jsonapiObject()
     //         ->fake()
     //         ->toArray();
