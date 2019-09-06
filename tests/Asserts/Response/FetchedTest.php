@@ -35,7 +35,7 @@ class FetchedTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $expected = Generator::getInstance()->resourceObject($model, $resourceType)->toArray();
+        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
 
         $response->assertJsonApiFetchedSingleResource($expected);
     }
@@ -59,7 +59,7 @@ class FetchedTest extends TestCase
         $resourceType = 'dummy';
         $model = $this->createModel();
 
-        $expected = Generator::getInstance()->resourceObject($model, $resourceType)->toArray();
+        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
 
         return [
             'bad status' => [

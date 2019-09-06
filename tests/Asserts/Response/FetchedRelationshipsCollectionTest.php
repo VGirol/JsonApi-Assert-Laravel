@@ -26,7 +26,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
         $resourceType = 'dummy';
-        $expected = Generator::getInstance()->riCollection(collect([]), $resourceType)->toArray();
+        $expected = (new Generator)->riCollection(collect([]), $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -49,7 +49,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = Generator::getInstance()->riCollection($collection, $resourceType)->toArray();
+        $expected = (new Generator)->riCollection($collection, $resourceType)->toArray();
 
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
@@ -85,7 +85,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
         ];
         $resourceType = 'dummy';
         $collection = $this->createCollection();
-        $expected = Generator::getInstance()->riCollection($collection, $resourceType)->toArray();
+        $expected = (new Generator)->riCollection($collection, $resourceType)->toArray();
 
         return [
             'wrong status' => [

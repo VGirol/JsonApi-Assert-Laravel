@@ -36,7 +36,7 @@ class CreatedTest extends TestCase
         if ($withLocationHeader) {
             $headers['Location'] = ['url'];
         }
-        $expected = Generator::getInstance()->resourceObject($model, $resourceType)
+        $expected = (new Generator)->resourceObject($model, $resourceType)
             ->addLink('self', $selfUrl)
             ->toArray();
 
@@ -80,7 +80,7 @@ class CreatedTest extends TestCase
         $resourceType = 'dummy';
         $model = $this->createModel();
         $selfUrl = 'url';
-        $expected = Generator::getInstance()->resourceObject($model, $resourceType)
+        $expected = (new Generator)->resourceObject($model, $resourceType)
             ->addLink('self', $selfUrl)
             ->toArray();
 

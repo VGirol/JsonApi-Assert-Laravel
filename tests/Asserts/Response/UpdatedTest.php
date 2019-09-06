@@ -44,7 +44,7 @@ class UpdatedTest extends TestCase
             'data' => $this->createResource($model, $resourceType, false, null, $additional)
         ];
 
-        $expected = Generator::getInstance()->resourceObject($model, $resourceType)
+        $expected = (new Generator)->resourceObject($model, $resourceType)
             ->addLink('self', $selfUrl)
             ->toArray();
 
@@ -85,7 +85,7 @@ class UpdatedTest extends TestCase
         $resourceType = 'dummy';
         $model = $this->createModel();
 
-        $expected = Generator::getInstance()->resourceObject($model, $resourceType)->toArray();
+        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
 
         return [
             'wrong status code' => [

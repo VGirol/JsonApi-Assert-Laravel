@@ -22,8 +22,7 @@ class JsonapiObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $jsonapi = Generator::getInstance()
-            ->jsonapiObject()
+        $jsonapi = (new Generator)->jsonapiObject()
             ->fake()
             ->toArray();
         $content = [
@@ -57,7 +56,7 @@ class JsonapiObjectTest extends TestCase
 
     public function jsonapiObjectEqualsFailedProvider()
     {
-        $jsonapi = Generator::getInstance()
+        $jsonapi = (new Generator)
             ->jsonapiObject()
             ->fake()
             ->toArray();
@@ -94,8 +93,7 @@ class JsonapiObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $jsonapi = Generator::getInstance()
-            ->jsonapiObject()
+        $jsonapi = (new Generator)->jsonapiObject()
             ->fake()
             ->toArray();
         $content = [
