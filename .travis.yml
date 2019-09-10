@@ -1,25 +1,42 @@
+dist: bionic
+
 language: php
 php:
   - 7.2
-before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction
-  - mkdir -p build/coverage
-  - wget https://github.com/infection/infection/releases/download/0.12.0/infection.phar
-  - wget https://github.com/infection/infection/releases/download/0.12.0/infection.phar.asc
-  - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 493B4AA0
-  - gpg --with-fingerprint --verify infection.phar.asc infection.phar
-  - chmod +x infection.phar
-script:
-  - composer travis
-after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover ./build/coverage/clover.xml
+  - 7.3
+
+# This triggers builds to run on the new TravisCI infrastructure.
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+# sudo: false
+
+## Cache composer
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 matrix:
   fast_finish: true
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+  - mkdir -p build/coverage
+
+script:
+  - composer travis
+
+after_script:
+  - |
+    if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' ]]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover ./build/coverage/clover.xml
+    fi
+
 notifications:
   on_success: never
   on_failure: always
+
 env:
   global:
+    # secure key for infection badge (see https://infection.github.io/guide/mutation-badge.html)
     secure: bntVq19iHm6SyX+4lGtI5er+3Z9YNDh5x1ty8jfP16CfVj60qHaIcpNOFzXOTJHvGTSnw2MNdf7UiR1Vs85PU9pD3tQ8RAuYrwIEA8+exrqjsVNeux7YGF83WfXuWcetF3xGg6wOk76vsCUa3IegXOAZN2HfHK8SslbA4Tpm+vAQEiQ/VurkQspo45VPk92hEMTge+6cj9zOTL8KXEEVX3IjtDZUV6O3WZ5HjuV7Kd/PsgDehCiXo/K5IZbfPwUFzFV0+6HAkl1+7u8zyhVQQYe/BUgsQdqbAZJACpjeO1mu6Snq1VPi/mRWU4OndF7d34SIOF7FTKHnPCpwek6/0384z7quXIv+Ib2aSBJcdAMyxDTlyGiSsAaeh88AAewUmfY28cMDYVRQRpQHe5CFaLzNv7Al0JefyEfiF1JuGrX6LOTg5nNw+TWVM3ahz/9+2gcWj15JBzZJfH2Qhvk5+cDTxfU1Bh1iIN/RxcXm8IgPHJT9k/grLG45focJkDoo6+hV9cFb2WPwJcxjBD+lIhPO1uOmJDhrQEci721v0mDpRS9SkThy15EFsQECwGL8I6uJLs/CF61tM6V9aOoFvvT2Cw1fYo5xybKtzLQfJCa3D7IoZ/T1j6Lkb55agi07pwikUy1EhE8Oll8B1nqesfj9ZYCePrrMuxY2eawcLUc=

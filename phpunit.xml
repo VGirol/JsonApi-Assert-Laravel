@@ -2,18 +2,19 @@
 <phpunit
         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        bootstrap="vendor/autoload.php"
         backupGlobals="false"
         backupStaticAttributes="false"
-        bootstrap="./vendor/autoload.php"
         colors="true"
+        verbose="true"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
         processIsolation="false"
         stopOnFailure="false">
     <testsuites>
-        <testsuite name="Asserts">
-            <directory suffix="Test.php">./tests/Asserts</directory>
+        <testsuite name="VGirol Test Suite">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>

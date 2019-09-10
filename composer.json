@@ -1,9 +1,23 @@
 {
     "name": "vgirol/jsonapi-assert-laravel",
-    "description": "RESTfull JSON:Api test assertions for Laravel",
     "type": "library",
+    "description": "This package provides a set of assertions to test documents using Laravel and the JSON:API specification.",
+    "keywords": [
+        "VGirol",
+        "JsonApi-Assert-Laravel",
+        "Laravel",
+        "Unit test",
+        "Assertions"
+    ],
     "homepage": "http://github.com/VGirol/JsonApi-Assert-Laravel",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Vincent Girol",
+            "email": "vincent@girol.fr",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "phpunit/phpunit": "^8.0",
@@ -38,13 +52,7 @@
             }
         }
     ],
-    "authors": [
-        {
-            "name": "Vincent Girol",
-            "email": "vincent@girol.fr"
-        }
-    ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "VGirol\\JsonApiAssert\\Laravel\\": "src/"
@@ -61,7 +69,7 @@
             "@setup"
         ],
         "test": "./vendor/bin/phpunit tests ",
-        "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist",
+        "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json --min-msi=70 --min-covered-msi=70",
         "travis": [
             "@test",
             "@infection"
@@ -79,5 +87,8 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }

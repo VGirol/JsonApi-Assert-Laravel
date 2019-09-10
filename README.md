@@ -1,9 +1,12 @@
 # JsonApi-Assert-Laravel
 
-[![Build Status](https://travis-ci.org/VGirol/JsonApi-Assert-Laravel.svg?branch=master)](https://travis-ci.org/VGirol/JsonApi-Assert-Laravel)
-[![Code Coverage](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/?branch=master)
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Assert-Laravel/master)](https://infection.github.io)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/?branch=master)
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
+[![Infection MSI][ico-mutation]][link-mutation]
+[![Total Downloads][ico-downloads]][link-downloads]
 
 This package adds a lot of methods to the [`Illuminate\Foundation\Testing\TestResponse`](https://laravel.com/api/5.8/Illuminate/Foundation/Testing/TestResponse.html) class for testing APIs that implements the [JSON:API specification](https://jsonapi.org/).
 
@@ -662,24 +665,46 @@ $response = $this->json('PATCH', route('mymodel.update', ['id' => $model->getKey
 $response->assertJsonApiUpdated($model, $resourceType);
 ```
 
-## Changelog
+## Change log
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Testing
 
-```sh
+``` bash
 composer test
 ```
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
+
+## Security
+
+If you discover any security related issues, please email [vincent@girol.fr](mailto:vincent@girol.fr) instead of using the issue tracker.
 
 ## Credits
 
-[Vincent Girol](vincent@girol.fr)
+- [Girol Vincent][link-author]
+- [All Contributors][link-contributors]
 
 ## License
 
-This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/) License.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/VGirol/VGirolJsonApi-Assert-Laravel/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
+[ico-mutation]: https://badge.stryker-mutator.io/github.com/VGirol/VGirolJsonApi-Assert-Laravel/master
+[ico-downloads]: https://img.shields.io/packagist/dt/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/VGirol/VGirolJsonApi-Assert-Laravel
+[link-travis]: https://travis-ci.org/VGirol/VGirolJsonApi-Assert-Laravel
+[link-scrutinizer]: https://scrutinizer-ci.com/g/VGirol/VGirolJsonApi-Assert-Laravel/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/VGirol/VGirolJsonApi-Assert-Laravel
+[link-downloads]: https://packagist.org/packages/VGirol/VGirolJsonApi-Assert-Laravel
+[link-author]: https://github.com/VGirol
+[link-mutation]: https://infection.github.io
+[link-contributors]: ../../contributors
