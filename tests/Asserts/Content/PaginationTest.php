@@ -10,7 +10,7 @@ use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
 
-class LinksObjectTest extends TestCase
+class PaginationTest extends TestCase
 {
     /**
      * @test

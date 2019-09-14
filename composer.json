@@ -52,7 +52,8 @@
             }
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "VGirol\\JsonApiAssert\\Laravel\\": "src/"
