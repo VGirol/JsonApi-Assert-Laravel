@@ -39,7 +39,7 @@ trait AssertPagination
         $json = $response->json();
 
         if (!isset($json[Members::META])) {
-            static::assertHasNoMember(Members::META, $json);
+            static::assertNotHasMember(Members::META, $json);
 
             return;
         }
