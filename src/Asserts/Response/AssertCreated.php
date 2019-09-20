@@ -51,10 +51,10 @@ trait AssertCreated
 
         // Checks Location header
         $header = $response->headers->get('Location');
-        if (($header !== null) && isset($data[Members::LINKS][Members::SELF])) {
+        if (($header !== null) && isset($data[Members::LINKS][Members::LINK_SELF])) {
             PHPUnit::assertEquals(
                 $header,
-                $data[Members::LINKS][Members::SELF]
+                $data[Members::LINKS][Members::LINK_SELF]
             );
         }
     }

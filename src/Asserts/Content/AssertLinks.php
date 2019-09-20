@@ -13,7 +13,7 @@ trait AssertLinks
      * @param \Illuminate\Foundation\Testing\TestResponse $response
      * @param array $expected
      */
-    public static function assertTopLevelLinksObjectEquals(TestResponse $response, $expected)
+    public static function assertDocumentLinksObjectEquals(TestResponse $response, $expected)
     {
         if (!\is_array($expected)) {
             static::invalidArgument(
@@ -39,7 +39,7 @@ trait AssertLinks
      * @param \Illuminate\Foundation\Testing\TestResponse $response
      * @param array $expected
      */
-    public static function assertTopLevelLinksObjectContains(TestResponse $response, $expected)
+    public static function assertDocumentLinksObjectContains(TestResponse $response, $expected)
     {
         if (!\is_array($expected)) {
             static::invalidArgument(
