@@ -66,6 +66,9 @@ trait AssertPagination
 
     public static function assertResponseHasNoPagination(TestResponse $response)
     {
+        // Decode JSON response
+        $json = $response->json();
+
         static::assertResponseHasNoPaginationLinks($response);
         static::assertResponseHasNoPaginationMeta($response);
         if (isset($json[Members::META])) {
