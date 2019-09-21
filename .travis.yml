@@ -1,42 +1,28 @@
 dist: bionic
-
 language: php
 php:
-  - 7.2
-  - 7.3
-
-# This triggers builds to run on the new TravisCI infrastructure.
-# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-# sudo: false
-
-## Cache composer
+- 7.2
+- 7.3
 cache:
   directories:
-    - $HOME/.composer/cache
-
+  - "$HOME/.composer/cache"
 matrix:
   fast_finish: true
-
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist
-  - mkdir -p build/coverage
-
+- travis_retry composer self-update
+- travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+- mkdir -p build/coverage
 script:
-  - composer travis
-
+- composer travis
 after_script:
-  - |
-    if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' ]]; then
-      wget https://scrutinizer-ci.com/ocular.phar
-      php ocular.phar code-coverage:upload --format=php-clover ./build/coverage/clover.xml
-    fi
-
+- |
+  if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' ]]; then
+    wget https://scrutinizer-ci.com/ocular.phar
+    php ocular.phar code-coverage:upload --format=php-clover ./build/coverage/clover.xml
+  fi
 notifications:
   on_success: never
   on_failure: always
-
 env:
   global:
-    # secure key for infection badge (see https://infection.github.io/guide/mutation-badge.html)
-    secure: VyW+SCaCArQZJJ6/zQy++jQkxkVLqbT390K6LZsIISADQ+I5SDzJ34VYLQxguO4lt/CC5U/hKqdqhwRdHKACrpdMO9rO7vD1Y+gU94gpyF+UT90Jx1RSRFi0pNQvKVgNTdT372vUvapZxgsTJaIhj8GpSi+nD2ZbIIm3nWSgTcRpJWB+0ldPiaijPbsaiF53VYNzxbsNZnXLMBkr2LcDbz4ggP5v5ETeAkI64c2gppdSoQQzd9qB2ViXKS6CvNrWK4PW6M/2PtcFwsutF4J/2N8PFr1PiYZ439nFP3dBJ7CDBnyWviA3D+hgHYEQlbm5ULmBLAY4reycD1cBdeUNDO4ImmmUvLn8pNa9g48qA1MQr75RMDCp8uEJaGgygfDSi1c4KDUAbvlGcawQMTKyULWaMQohUvzBp20gARBJ24ICde1N1b/7UAVW3GV4qNVFpSPvTOtNFNzHIkqhxxEapttg7bbqd0hAUuN5A7/itHs8sy7S5DwE5TmqVPEzXmryLktu7lZiPbblNDRh2NAzYW/DavvVLZrxLkdHYCLfoDA1XYBmlAG1Q49GLA0sGl76Kk/qbkaf7yPgwZXLYtX28FGEL1UukBZxo1ym75PogbPSbebiyqV+XB/7cpbx5muWq3zYF2i03X4ATsGX4O+c7/Ahg8g40pJFoPXKPgQ/IK0=
+    secure: aZadEWBuRAL6emNdhGDjAL+geq4T0BE0f+3/QixY8H/fScAF30CMqOcgVTIMZx66nKznH7Hbqy4Xnh1nEdJiM9bI/fnkPySUjqq6B4daUC5/3ozmLssi1RlhN9NGTsduHTDQ10YCCQ28pNKZD8CgXzrD3q5pEl0V+VtZljD0ocX+GZZSG3Ibomrw5VoB7JojdzD5npvyBoZ3UgsATAuYI+6A4fakYRIJLtsSYv3Hdx+h4W3BK+8jNBsDOccvIe5CXJ98ZXojzn3jW1P84YKBvGrmfqUPYb4ePhhpNmjWTSqKTaSqs5lV1gWEckjixVdLqNVYMa7x/LmJ4PqZqllxROHGRNvG6s1tcEdo2he/kCvNikoK4GcnWZO5/hfpZw7E00ig6R4f+UogxhAL8gG0GPlYClBth+zNhN8WN2TvpLKVRzdAY1aNYgxGI9nblqU24qZO+X/+A9Q9odjQHpEt+kGfeouty8t33FA9B+K1Fj5p0P4//xOepZsr2hgl0H2PsDO7K4ZiS1rkxzzCCtpfNtteYAwa0Cu/Be+CJnAmBF6MxNddk51O8taDhtYtt/sO6o/SIyK71N2XfDb8p6QB4Z7mBjDHTxWkLB0UpzO9DTA2NNNxG7Nij2SiDvirHnE0CBeh9A71SPViUBHbptL2tJY0e5o/KuqA+77rMwQWUH8=
