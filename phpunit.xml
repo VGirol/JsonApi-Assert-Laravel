@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-        xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        bootstrap="vendor/autoload.php"
-        backupGlobals="false"
-        backupStaticAttributes="false"
-        colors="true"
-        verbose="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        processIsolation="false"
-        stopOnFailure="false">
+<phpunit xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" backupGlobals="false" backupStaticAttributes="false" colors="true" verbose="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false">
     <testsuites>
         <testsuite name="VGirol Test Suite">
             <directory suffix="Test.php">./tests</directory>
@@ -20,6 +9,9 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>src/ide_helpers.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <php>
