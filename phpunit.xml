@@ -9,9 +9,6 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
-            <exclude>
-                <file>src/ide_helpers.php</file>
-            </exclude>
         </whitelist>
     </filter>
     <php>
