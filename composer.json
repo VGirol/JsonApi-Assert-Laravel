@@ -25,7 +25,7 @@
         "vgirol/jsonapi-assert": "dev-master"
     },
     "require-dev": {
-        "infection/infection": "^0.13",
+        "infection/infection": "^0.14",
         "orchestra/testbench": "~3.8|^4.0",
         "vgirol/jsonapi-faker-laravel": "dev-master"
     },
