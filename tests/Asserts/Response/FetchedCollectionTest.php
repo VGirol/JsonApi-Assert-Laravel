@@ -4,7 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
-use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
@@ -32,7 +32,7 @@ class FetchedCollectionTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiFetchedResourceCollection($expected, $strict);
+        Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
     }
 
     /**
@@ -52,7 +52,7 @@ class FetchedCollectionTest extends TestCase
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiFetchedResourceCollection($expected, $strict);
+        Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
     }
 
     public function responseFetchedCollectionFailedProvider()
@@ -110,18 +110,33 @@ class FetchedCollectionTest extends TestCase
                 $expected,
                 false,
                 sprintf(Messages::HAS_MEMBER, 'data')
-            ],
-            'data not as expected' => [
-                $status,
-                $headers,
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, false, 'value'),
-                    'anything' => 'not valid'
-                ],
-                $expected,
-                false,
-                null
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function responseFetchedCollectionFailedNext()
+    {
+        $resourceType = 'dummy';
+        $collection = $this->createCollection();
+        $status = 200;
+        $headers = [
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
+        ];
+        $content = [
+            'data' => $this->createResourceCollection($collection, $resourceType, false, 'value')
+        ];
+        $expected = (new Generator)->roCollection($collection, $resourceType)->toArray();
+        $strict = false;
+        $failureMsg = '/'.sprintf(preg_quote(Messages::RESOURCE_IS_NOT_EQUAL), '.*', '.*').'.*/s';
+
+        $response = Response::create(json_encode($content), $status, $headers);
+        $response = TestResponse::fromBaseResponse($response);
+
+        $this->setFailureExceptionRegex($failureMsg);
+
+        Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
     }
 }

@@ -7,18 +7,18 @@ use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Members;
 
 /**
- * Fetched relationships response
+ * This trait adds the ability to test fetching relationship response.
  */
 trait AssertFetchedRelationships
 {
     /**
-     * Asserts that the response has 200 status code and content with primary data
-     * represented as resource identifier objects and corresponding to the expected json fragment.
+     * Asserts that the response has "200 Ok" status code and valid content.
      *
-     * @param \Illuminate\Foundation\Testing\TestResponse $response
-     * @param array|null $expected
-     * @param boolean $strict
+     * @param TestResponse $response
+     * @param array<array>|null $expected The expected collection of resource identifier objects.
+     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
      *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertFetchedRelationshipsResponse(TestResponse $response, $expected, $strict)

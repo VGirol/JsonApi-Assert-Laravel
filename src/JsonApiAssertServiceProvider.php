@@ -5,7 +5,7 @@ namespace VGirol\JsonApiAssert\Laravel;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Undocumented class
+ * Service provider for Laravel
  */
 class JsonApiAssertServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,11 @@ class JsonApiAssertServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        foreach (glob(__DIR__ . '/macro/**/*.php') as $file) {
-            require_once($file);
+        $list = glob(__DIR__ . '/macro/**/*.php');
+        if ($list !== false) {
+            foreach ($list as $file) {
+                require_once($file);
+            }
         }
     }
 
@@ -27,6 +30,5 @@ class JsonApiAssertServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-    }
+    { }
 }

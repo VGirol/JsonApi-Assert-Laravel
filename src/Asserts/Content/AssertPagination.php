@@ -6,15 +6,26 @@ use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Members;
 
+/**
+ * This trait adds the ability to test pagination informations (links and meta).
+ */
 trait AssertPagination
 {
+    /**
+     * Asserts that a document have no pagination links.
+     *
+     * @param TestResponse $response
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResponseHasNoPaginationLinks(TestResponse $response): void
     {
         // Decode JSON response
         $json = $response->json();
 
         if (!isset($json[Members::LINKS])) {
-            PHPUnit::assertTrue(true);
+            static::assertNotHasMember(Members::LINKS, $json);
 
             return;
         }
@@ -23,6 +34,15 @@ trait AssertPagination
         static::assertHasNoPaginationLinks($links);
     }
 
+    /**
+     * Asserts that a document have the expected pagination links.
+     *
+     * @param TestResponse $response
+     * @param array<string, mixed> $expected
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResponseHasPaginationLinks(TestResponse $response, $expected)
     {
         // Decode JSON response
@@ -33,6 +53,14 @@ trait AssertPagination
         static::assertPaginationLinksEquals($expected, $links);
     }
 
+    /**
+     * Asserts that a document have no pagination meta.
+     *
+     * @param TestResponse $response
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResponseHasNoPaginationMeta(TestResponse $response): void
     {
         // Decode JSON response
@@ -48,35 +76,52 @@ trait AssertPagination
         static::assertHasNoPaginationMeta($meta);
     }
 
-    public static function assertResponseHasPaginationMeta(TestResponse $response, $expected, $path = null)
+    /**
+     * Asserts that a document have pagination meta.
+     *
+     * @param TestResponse $response
+     * @param array<string, mixed> $expected
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public static function assertResponseHasPaginationMeta(TestResponse $response, $expected)
     {
         // Decode JSON response
         $json = $response->json();
-
-        if ($path !== null) {
-            $json = static::getJsonFromPath($json, $path);
-        }
 
         static::assertHasMeta($json);
         $meta = $json[Members::META];
-        static::assertHasMember('pagination', $meta);
-        $pagination = $meta['pagination'];
+
+        static::assertHasMember(Members::META_PAGINATION, $meta);
+        $pagination = $meta[Members::META_PAGINATION];
         PHPUnit::assertEquals($expected, $pagination);
     }
 
+    /**
+     * Asserts that a document have no pagination informations (links and meta).
+     *
+     * @param TestResponse $response
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResponseHasNoPagination(TestResponse $response)
     {
-        // Decode JSON response
-        $json = $response->json();
-
         static::assertResponseHasNoPaginationLinks($response);
         static::assertResponseHasNoPaginationMeta($response);
-        if (isset($json[Members::META])) {
-            $meta = $json[Members::META];
-            JsonApiAssert::assertNotHasMember('pagination', $meta);
-        }
     }
 
+    /**
+     * Asserts that a document have pagination informations (links and meta).
+     *
+     * @param TestResponse $response
+     * @param array<string, mixed> $expectedLinks
+     * @param array<string, mixed> $expectedMeta
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResponseHasPagination(TestResponse $response, $expectedLinks, $expectedMeta)
     {
         static::assertResponseHasPaginationLinks($response, $expectedLinks);

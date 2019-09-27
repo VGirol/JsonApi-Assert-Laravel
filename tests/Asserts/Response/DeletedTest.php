@@ -4,6 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
+use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
@@ -16,10 +17,12 @@ class DeletedTest extends TestCase
     public function responseDeleted()
     {
         $status = 200;
+        $strict = false;
+        $meta = [
+            'message' => 'Deleting succeed'
+        ];
         $content = [
-            'meta' => [
-                'message' => 'Deleting succeed'
-            ]
+            'meta' => $meta
         ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
@@ -28,7 +31,7 @@ class DeletedTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiDeleted();
+        Assert::assertIsDeletedResponse($response, $meta, $strict);
     }
 
     /**
@@ -42,7 +45,7 @@ class DeletedTest extends TestCase
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiDeleted($meta, $strict);
+        Assert::assertIsDeletedResponse($response, $meta, $strict);
     }
 
     public function notValidResponseDeleted()

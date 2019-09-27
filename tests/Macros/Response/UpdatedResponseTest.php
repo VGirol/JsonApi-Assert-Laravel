@@ -1,22 +1,21 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
+namespace VGirol\JsonApiAssert\Laravel\Tests\Macros\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
-use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
-class UpdatedTest extends TestCase
+class UpdatedResponseTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider responseUpdatedProvider
+     * @dataProvider assertJsonApiUpdatedProvider
      */
-    public function responseUpdated($content, $expected, $strict)
+    public function assertJsonApiUpdated($content, $expected, $strict)
     {
         $status = 200;
         $headers = [
@@ -26,10 +25,10 @@ class UpdatedTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertIsUpdatedResponse($response, $expected, $strict);
+        $response->assertJsonApiUpdated($expected, $strict);
     }
 
-    public function responseUpdatedProvider()
+    public function assertJsonApiUpdatedProvider()
     {
         $selfUrl = 'url';
         $additional = [
@@ -68,16 +67,30 @@ class UpdatedTest extends TestCase
 
     /**
      * @test
-     * @dataProvider responseUpdatedFailedProvider
      */
-    public function responseUpdatedFailed($status, $headers, $content, $expected, $strict, $failureMsg)
+    public function assertJsonApiUpdatedFailed()
     {
+        $resourceType = 'dummy';
+        $model = $this->createModel();
+
+        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
+
+        $status = 200;
+        $headers = [
+            HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
+        ];
+        $content = [
+            'data' => $this->createResource($model, $resourceType, false, 'structure', null)
+        ];
+        $strict = false;
+        $failureMsg = Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING;
+
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
 
-        Assert::assertIsUpdatedResponse($response, $expected, $strict);
+        $response->assertJsonApiUpdated($expected, $strict);
     }
 
     public function responseUpdatedFailedProvider()
