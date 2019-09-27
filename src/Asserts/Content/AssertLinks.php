@@ -5,13 +5,19 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 use Illuminate\Foundation\Testing\TestResponse;
 use VGirol\JsonApiAssert\Members;
 
+/**
+ * This trait adds the ability to test links object.
+ */
 trait AssertLinks
 {
     /**
-     * Asserts that a links object equals an expected array of links.
+     * Asserts that a document links object equals an expected array of links.
      *
-     * @param \Illuminate\Foundation\Testing\TestResponse $response
-     * @param array $expected
+     * @param TestResponse $response
+     * @param array<string, mixed> $expected
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertDocumentLinksObjectEquals(TestResponse $response, $expected)
     {
@@ -34,10 +40,13 @@ trait AssertLinks
     }
 
     /**
-     * Asserts that a links object contains an expected array of links.
+     * Asserts that a document links object contains an expected array of links.
      *
-     * @param \Illuminate\Foundation\Testing\TestResponse $response
-     * @param array $expected
+     * @param TestResponse $response
+     * @param array<string, mixed> $expected
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertDocumentLinksObjectContains(TestResponse $response, $expected)
     {

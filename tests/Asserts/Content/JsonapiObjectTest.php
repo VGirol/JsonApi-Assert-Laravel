@@ -4,6 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Content;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
+use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Members;
@@ -32,7 +33,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiJsonapiObject($jsonapi);
+        Assert::assertResponseJsonapiObjectEquals($response, $jsonapi);
     }
 
     /**
@@ -51,7 +52,7 @@ class JsonapiObjectTest extends TestCase
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiJsonapiObject($expected);
+        Assert::assertResponseJsonapiObjectEquals($response, $expected);
     }
 
     public function jsonapiObjectEqualsFailedProvider()
@@ -106,6 +107,6 @@ class JsonapiObjectTest extends TestCase
 
         $this->setInvalidArgumentException(2, 'array', $invalidExpected);
 
-        $response->assertJsonApiJsonapiObject($invalidExpected);
+        Assert::assertResponseJsonapiObjectEquals($response, $invalidExpected);
     }
 }

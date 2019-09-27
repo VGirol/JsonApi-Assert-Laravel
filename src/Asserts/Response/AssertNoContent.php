@@ -7,15 +7,16 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 
 /**
- * No content response
+ * This trait adds the ability to test response with no content.
  */
 trait AssertNoContent
 {
     /**
-     * Asserts that a response is a valid '204 No Content' response.
+     * Asserts that a response is a valid "204 No Content" response.
      *
-     * @param \Illuminate\Foundation\Testing\TestResponse $response
+     * @param TestResponse $response
      *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsNoContentResponse(TestResponse $response)

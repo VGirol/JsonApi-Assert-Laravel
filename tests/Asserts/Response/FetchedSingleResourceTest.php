@@ -1,22 +1,23 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts;
+namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
-use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
-class FetchedTest extends TestCase
+class FetchedSingleResourceTest extends TestCase
 {
     /**
      * @test
      */
-    public function responseFetchedSingleResource()
+    public function fetchedSingleResource()
     {
+        $strict = false;
         $resourceType = 'dummy';
         $model = $this->createModel();
 
@@ -37,24 +38,24 @@ class FetchedTest extends TestCase
 
         $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
 
-        $response->assertJsonApiFetchedSingleResource($expected);
+        Assert::assertFetchedSingleResourceResponse($response, $expected, $strict);
     }
 
     /**
      * @test
-     * @dataProvider responseFetchedSingleResourceFailedProvider
+     * @dataProvider fetchedSingleResourceFailedProvider
      */
-    public function responseFetchedSingleResourceFailed($status, $headers, $content, $expected, $failureMsg)
+    public function fetchedSingleResourceFailed($status, $headers, $content, $expected, $strict, $failureMsg)
     {
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiFetchedSingleResource($expected);
+        Assert::assertFetchedSingleResourceResponse($response, $expected, $strict);
     }
 
-    public function responseFetchedSingleResourceFailedProvider()
+    public function fetchedSingleResourceFailedProvider()
     {
         $resourceType = 'dummy';
         $model = $this->createModel();
@@ -75,6 +76,7 @@ class FetchedTest extends TestCase
                     ]
                 ],
                 $expected,
+                true,
                 'Expected status code 200 but received 400.'
             ],
             'no headers' => [
@@ -88,6 +90,7 @@ class FetchedTest extends TestCase
                     ]
                 ],
                 $expected,
+                true,
                 'Header [Content-Type] not present on response.'
             ],
             'no valid structure' => [
@@ -104,6 +107,7 @@ class FetchedTest extends TestCase
                     ]
                 ],
                 $expected,
+                true,
                 Messages::ONLY_ALLOWED_MEMBERS
             ],
             'no data member' => [
@@ -119,6 +123,7 @@ class FetchedTest extends TestCase
                     ]
                 ],
                 $expected,
+                true,
                 sprintf(Messages::HAS_MEMBER, 'data')
             ],
             'data attributes member not valid' => [
@@ -139,6 +144,7 @@ class FetchedTest extends TestCase
                     ]
                 ],
                 $expected,
+                true,
                 null
             ]
         ];

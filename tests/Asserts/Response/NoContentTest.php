@@ -4,6 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
+use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 
@@ -21,7 +22,7 @@ class NoContentTest extends TestCase
         $response = Response::create(null, 204, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiNoContent();
+        Assert::assertIsNoContentResponse($response);
     }
 
     /**
@@ -35,7 +36,7 @@ class NoContentTest extends TestCase
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiNoContent();
+        Assert::assertIsNoContentResponse($response);
     }
 
     public function notValidResponseNoContent()

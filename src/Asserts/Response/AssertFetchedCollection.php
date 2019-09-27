@@ -7,18 +7,18 @@ use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Members;
 
 /**
- * Fetched collection response
+ * This trait adds the ability to test fetching collection response.
  */
 trait AssertFetchedCollection
 {
     /**
-     * Asserts that the response has 200 status code and content with primary data
-     * corresponding to the provided collection and resource type.
+     * Asserts that the response has "200 Ok" status code and valid content.
      *
-     * @param \Illuminate\Foundation\Testing\TestResponse $response
-     * @param array $expected
+     * @param TestResponse $response
+     * @param array<array> $expected The expected collection of resource objects.
      * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
      *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertFetchedResourceCollectionResponse(TestResponse $response, $expected, bool $strict)

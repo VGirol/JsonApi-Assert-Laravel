@@ -4,7 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
-use VGirol\JsonApiAssert\Laravel\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
@@ -43,7 +43,7 @@ class CreatedTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiCreated($expected, $strict);
+        Assert::assertIsCreatedResponse($response, $expected, $strict);
     }
 
     public function responseCreatedProvider()
@@ -69,7 +69,7 @@ class CreatedTest extends TestCase
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiCreated($expected, $strict);
+        Assert::assertIsCreatedResponse($response, $expected, $strict);
     }
 
     public function notValidResponseCreated()
