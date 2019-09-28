@@ -16,62 +16,49 @@ class CreatedResponseTest extends TestCase
      */
     public function assertJsonApiCreated()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $model = $this->createModel();
         $status = 201;
-        $selfUrl = 'url';
-        $content = [
-            'data' => $this->createResource($model, $resourceType, false, null, [
-                'links' => [
-                    'self' => $selfUrl
-                ]
-            ])
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
+        $strict = false;
 
-        $expected = (new Generator)->resourceObject($model, $resourceType)
-            ->addLink('self', $selfUrl)
-            ->toArray();
+        $resFactory = (new Generator)->resourceObject()
+            ->fake()
+            ->fakeLinks();
+        $doc = (new Generator)->document()
+            ->setData($resFactory);
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiCreated($expected, $strict);
+        $response->assertJsonApiCreated($resFactory->toArray(), $strict);
     }
 
     /**
+     * Response has no "data" member.
      * @test
      */
     public function assertJsonApiCreatedFailed()
     {
-        $strict = false;
         $status = 201;
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $resourceType = 'dummy';
-        $model = $this->createModel();
-        $selfUrl = 'url';
-        $content = [
-            'data' => $this->createResource($model, $resourceType, false, 'structure', [
-                'links' => [
-                    'self' => $selfUrl
-                ]
-            ])
-        ];
-        $expected = (new Generator)->resourceObject($model, $resourceType)
-            ->addLink('self', $selfUrl)
-            ->toArray();
-        $failureMsg = Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING;
+        $strict = false;
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $roFactory = (new Generator)->resourceObject()
+            ->fake()
+            ->fakeLinks();
+        $doc = (new Generator)->document()
+            ->fakeMeta();
+
+        $failureMsg = sprintf(Messages::HAS_MEMBER, 'data');
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiCreated($expected, $strict);
+        $response->assertJsonApiCreated($roFactory->toArray(), $strict);
     }
 }

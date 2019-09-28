@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedRelationshipsCollectionTest extends TestCase
@@ -17,21 +18,22 @@ class FetchedRelationshipsCollectionTest extends TestCase
      */
     public function responseFetchedEmptyToManyRelationships()
     {
-        $strict = false;
         $status = 200;
-        $content = [
-            'data' => []
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $resourceType = 'dummy';
-        $expected = (new Generator)->riCollection(collect([]), $resourceType)->toArray();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $collectionFactory = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER, 0);
+        $doc = (new Generator)->document()
+            ->setData($collectionFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertFetchedRelationshipsResponse($response, $expected, $strict);
+        Assert::assertFetchedRelationshipsResponse($response, $collectionFactory->toArray(), $strict);
     }
 
     /**
@@ -39,22 +41,22 @@ class FetchedRelationshipsCollectionTest extends TestCase
      */
     public function responseFetchedToManyRelationships()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
         $status = 200;
-        $content = [
-            'data' => $this->createResourceCollection($collection, $resourceType, true, null)
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->riCollection($collection, $resourceType)->toArray();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $collectionFactory = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER);
+        $doc = (new Generator)->document()
+            ->setData($collectionFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertFetchedRelationshipsResponse($response, $expected, $strict);
+        Assert::assertFetchedRelationshipsResponse($response, $collectionFactory->toArray(), $strict);
     }
 
     /**
@@ -69,7 +71,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
         $strict,
         $failureMsg
     ) {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -83,63 +85,49 @@ class FetchedRelationshipsCollectionTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
-        $expected = (new Generator)->riCollection($collection, $resourceType)->toArray();
+        // $resourceType = 'dummy';
+        // $collection = $this->createCollection();
+        $collectionFactory = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER);
 
         return [
             'wrong status' => [
                 400,
                 $headers,
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, true, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($collectionFactory)->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 'Expected status code 200 but received 400.'
             ],
             'no headers' => [
                 $status,
                 [],
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, true, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($collectionFactory)->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 'Header [Content-Type] not present on response.'
             ],
             'not valid structure' => [
                 $status,
                 $headers,
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, true, null),
-                    'anything' => 'not valid'
-                ],
-                $expected,
-                false,
-                Messages::ONLY_ALLOWED_MEMBERS
+                (new Generator)->document()->setData($collectionFactory)->setMeta(['not safe' => 'error'])->toJson(),
+                $collectionFactory->toArray(),
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 $status,
                 $headers,
-                [
-                    'errors' => [
-                        [
-                            'status' => '400'
-                        ]
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->fakeMEta()->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 sprintf(Messages::HAS_MEMBER, 'data')
             ],
             'not valid collection' => [
                 $status,
                 $headers,
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, true, 'value')
-                ],
-                $expected,
+                (new Generator)->document()->fakeData()->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 null
             ]

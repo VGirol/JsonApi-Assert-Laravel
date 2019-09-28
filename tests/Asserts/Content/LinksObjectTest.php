@@ -8,7 +8,7 @@ use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
-use VGirol\JsonApiFaker\Factory\DocumentFactory;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class LinksObjectTest extends TestCase
 {
@@ -22,7 +22,7 @@ class LinksObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $doc = (new DocumentFactory)
+        $doc = (new Generator)->document()
             ->fakeMeta()
             ->fakeLinks();
 
@@ -43,7 +43,7 @@ class LinksObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -53,24 +53,18 @@ class LinksObjectTest extends TestCase
 
     public function documentLinksObjectEqualsFailedProvider()
     {
-        $doc = (new DocumentFactory)
+        $doc = (new Generator)->document()
             ->fakeMeta()
             ->fakeLinks();
 
         return [
             'no "links" member' => [
-                [
-                    'anything' => 'error'
-                ],
+                (new Generator)->document()->fakeMeta()->toJson(),
                 $doc->links,
                 sprintf(Messages::HAS_MEMBER, Members::LINKS)
             ],
             'not equals' => [
-                [
-                    Members::LINKS => [
-                        'about' => 'url'
-                    ]
-                ],
+                (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
                 $doc->links,
                 null
             ]
@@ -87,7 +81,7 @@ class LinksObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $doc = (new DocumentFactory)
+        $doc = (new Generator)->document()
             ->fakeMeta()
             ->fakeLinks();
 
@@ -111,7 +105,7 @@ class LinksObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $doc = (new DocumentFactory)
+        $doc = (new Generator)->document()
             ->fakeMeta()
             ->fakeLinks()
             ->addLink('test', 'url');
@@ -133,7 +127,7 @@ class LinksObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -143,24 +137,18 @@ class LinksObjectTest extends TestCase
 
     public function documentLinksObjectContainsFailedProvider()
     {
-        $doc = (new DocumentFactory)
+        $doc = (new Generator)->document()
             ->fakeMeta()
             ->fakeLinks();
 
         return [
             'no "links" member' => [
-                [
-                    'anything' => 'error'
-                ],
+                (new Generator)->document()->fakeMeta()->toJson(),
                 $doc->links,
                 sprintf(Messages::HAS_MEMBER, Members::LINKS)
             ],
             'does not contain' => [
-                [
-                    Members::LINKS => [
-                        'about' => 'url'
-                    ]
-                ],
+                (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
                 $doc->links,
                 null
             ]
@@ -177,7 +165,7 @@ class LinksObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $doc = (new DocumentFactory)
+        $doc = (new Generator)->document()
             ->fakeMeta()
             ->fakeLinks();
 

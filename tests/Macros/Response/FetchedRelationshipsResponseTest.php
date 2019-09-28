@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedRelationshipsResponseTest extends TestCase
@@ -16,22 +17,22 @@ class FetchedRelationshipsResponseTest extends TestCase
      */
     public function responseFetchedToOneRelationships()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $model = $this->createModel();
         $status = 200;
-        $content = [
-            'data' => $this->createResource($model, $resourceType, true, null)
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->resourceIdentifier($model, $resourceType)->toArray();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $riFactory = (new Generator)->resourceIdentifier()
+            ->fake();
+        $doc = (new Generator)->document()
+            ->setData($riFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiFetchedRelationships($expected, $strict);
+        $response->assertJsonApiFetchedRelationships($riFactory->toArray(), $strict);
     }
 
     /**
@@ -39,49 +40,48 @@ class FetchedRelationshipsResponseTest extends TestCase
      */
     public function responseFetchedToManyRelationships()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
         $status = 200;
-        $content = [
-            'data' => $this->createResourceCollection($collection, $resourceType, true, null)
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->riCollection($collection, $resourceType)->toArray();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $riCollection = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER);
+        $doc = (new Generator)->document()
+            ->setData($riCollection);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiFetchedRelationships($expected, $strict);
+        $response->assertJsonApiFetchedRelationships($riCollection->toArray(), $strict);
     }
 
     /**
+     * Response has no "data" member.
      * @test
      */
     public function assertJsonApiFetchedRelationshipsFailed()
     {
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
         $status = 200;
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->riCollection($collection, $resourceType)->toArray();
 
-        $content = [
-            'data' => $this->createResourceCollection($collection, $resourceType, true, null),
-            'anything' => 'not valid'
-        ];
         $strict = false;
-        $failureMsg = Messages::ONLY_ALLOWED_MEMBERS;
+        $failureMsg = sprintf(Messages::HAS_MEMBER, 'data');
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $riCollection = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER);
+        $doc = (new Generator)->document()
+            ->fakeMeta();
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
 
-        $response->assertJsonApiFetchedRelationships($expected, $strict);
+        $response->assertJsonApiFetchedRelationships($riCollection->toArray(), $strict);
     }
 }

@@ -40,9 +40,7 @@ class JsonapiObjectTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $content = [
-            'anything' => 'error'
-        ];
+        $doc = (new Generator)->document()->fakeMeta();
 
         $expected = (new Generator)
             ->jsonapiObject()
@@ -51,7 +49,7 @@ class JsonapiObjectTest extends TestCase
 
         $failureMsg = sprintf(Messages::HAS_MEMBER, Members::JSONAPI);
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);

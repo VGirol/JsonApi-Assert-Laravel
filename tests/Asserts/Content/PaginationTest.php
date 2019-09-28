@@ -24,7 +24,7 @@ class PaginationTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertResponseHasNoPaginationLinks($response);
@@ -37,14 +37,14 @@ class PaginationTest extends TestCase
                 (new Generator)
                     ->document()
                     ->fakeMeta()
-                    ->toArray()
+                    ->toJson()
             ],
             'no pagination links' => [
                 (new Generator)
                     ->document()
                     ->fakeMeta()
                     ->fakeLinks()
-                    ->toArray()
+                    ->toJson()
             ]
         ];
     }
@@ -63,9 +63,9 @@ class PaginationTest extends TestCase
             ->fakeMeta()
             ->fakeLinks()
             ->addLink(Members::LINK_PAGINATION_LAST, 'url')
-            ->toArray();
+            ->toJson();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException(sprintf(Messages::NOT_HAS_MEMBER, Members::LINK_PAGINATION_LAST));
@@ -90,9 +90,9 @@ class PaginationTest extends TestCase
             ->fakeMeta()
             ->fakeLinks()
             ->addLinks($links)
-            ->toArray();
+            ->toJson();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertResponseHasPaginationLinks($response, $links);
@@ -112,7 +112,7 @@ class PaginationTest extends TestCase
             Members::LINK_PAGINATION_LAST => 'url'
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -127,7 +127,7 @@ class PaginationTest extends TestCase
                 (new Generator)
                     ->document()
                     ->fakeMeta()
-                    ->toArray(),
+                    ->toJson(),
                 sprintf(Messages::HAS_MEMBER, 'links')
             ],
             'no pagination links' => [
@@ -135,7 +135,7 @@ class PaginationTest extends TestCase
                     ->document()
                     ->fakeMeta()
                     ->fakeLinks()
-                    ->toArray(),
+                    ->toJson(),
                 null
             ]
         ];
@@ -152,7 +152,7 @@ class PaginationTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertResponseHasNoPaginationMeta($response);
@@ -165,14 +165,14 @@ class PaginationTest extends TestCase
                 (new Generator)
                     ->document()
                     ->fakeLinks()
-                    ->toArray()
+                    ->toJson()
             ],
             'no pagination meta' => [
                 (new Generator)
                     ->document()
                     ->fakeLinks()
                     ->fakeMeta()
-                    ->toArray()
+                    ->toJson()
             ]
         ];
     }
@@ -190,9 +190,9 @@ class PaginationTest extends TestCase
             ->document()
             ->fakeMeta()
             ->addToMeta(Members::META_PAGINATION, ['error' => 'not allowed'])
-            ->toArray();
+            ->toJson();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException(sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION));
@@ -217,9 +217,9 @@ class PaginationTest extends TestCase
             ->document()
             ->fakeMeta()
             ->addToMeta(Members::META_PAGINATION, $expected)
-            ->toArray();
+            ->toJson();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertResponseHasPaginationMeta($response, $expected);
@@ -236,7 +236,7 @@ class PaginationTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -259,7 +259,7 @@ class PaginationTest extends TestCase
                 (new Generator)
                     ->document()
                     ->fakeLinks()
-                    ->toArray(),
+                    ->toJson(),
                 $expected,
                 sprintf(Messages::HAS_MEMBER, 'meta')
             ],
@@ -268,7 +268,7 @@ class PaginationTest extends TestCase
                     ->document()
                     ->fakeLinks()
                     ->fakeMeta()
-                    ->toArray(),
+                    ->toJson(),
                 $expected,
                 sprintf(Messages::HAS_MEMBER, Members::META_PAGINATION)
             ],
@@ -278,7 +278,7 @@ class PaginationTest extends TestCase
                     ->fakeLinks()
                     ->fakeMeta()
                     ->addToMeta(Members::META_PAGINATION, ['error' => 'not equal'])
-                    ->toArray(),
+                    ->toJson(),
                 $expected,
                 null
             ]
@@ -306,9 +306,9 @@ class PaginationTest extends TestCase
             ->addToMeta(Members::META_PAGINATION, $meta)
             ->fakeLinks()
             ->addLinks($links)
-            ->toArray();
+            ->toJson();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertResponseHasPagination($response, $links, $meta);
@@ -325,7 +325,7 @@ class PaginationTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -350,7 +350,7 @@ class PaginationTest extends TestCase
                     ->fakeMeta()
                     ->fakeLinks()
                     ->addToMeta(Members::META_PAGINATION, $meta)
-                    ->toArray(),
+                    ->toJson(),
                 $links,
                 $meta,
                 null
@@ -362,7 +362,7 @@ class PaginationTest extends TestCase
                     ->fakeMeta()
                     ->fakeLinks()
                     ->addLinks($links)
-                    ->toArray(),
+                    ->toJson(),
                 $links,
                 $meta,
                 null
@@ -384,9 +384,9 @@ class PaginationTest extends TestCase
             ->fakeData()
             ->fakeMeta()
             ->fakeLinks()
-            ->toArray();
+            ->toJson();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertResponseHasNoPagination($response);
@@ -403,7 +403,7 @@ class PaginationTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -421,7 +421,7 @@ class PaginationTest extends TestCase
                     ->fakeMeta()
                     ->fakeLinks()
                     ->addToMeta(Members::META_PAGINATION, ['key' => 'value'])
-                    ->toArray(),
+                    ->toJson(),
                 sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION)
             ],
             'with pagination links' => [
@@ -431,7 +431,7 @@ class PaginationTest extends TestCase
                     ->fakeMeta()
                     ->fakeLinks()
                     ->addLinks([Members::LINK_PAGINATION_LAST => 'url'])
-                    ->toArray(),
+                    ->toJson(),
                 sprintf(Messages::NOT_HAS_MEMBER, Members::LINK_PAGINATION_LAST)
             ]
         ];

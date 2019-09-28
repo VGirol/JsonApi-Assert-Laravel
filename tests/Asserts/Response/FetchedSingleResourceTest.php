@@ -17,28 +17,21 @@ class FetchedSingleResourceTest extends TestCase
      */
     public function fetchedSingleResource()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $model = $this->createModel();
-
         $status = 200;
-        $content = [
-            'data' => [
-                'type' => $resourceType,
-                'id' => strval($model->getKey()),
-                'attributes' => $model->toArray()
-            ]
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $roFactory = (new Generator)->resourceObject()
+            ->fake();
+        $doc = (new Generator)->document()->setData($roFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
-
-        Assert::assertFetchedSingleResourceResponse($response, $expected, $strict);
+        Assert::assertFetchedSingleResourceResponse($response, $roFactory->toArray(), $strict);
     }
 
     /**
@@ -47,7 +40,7 @@ class FetchedSingleResourceTest extends TestCase
      */
     public function fetchedSingleResourceFailed($status, $headers, $content, $expected, $strict, $failureMsg)
     {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -57,10 +50,7 @@ class FetchedSingleResourceTest extends TestCase
 
     public function fetchedSingleResourceFailedProvider()
     {
-        $resourceType = 'dummy';
-        $model = $this->createModel();
-
-        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
+        $roFactory = (new Generator)->resourceObject()->fake();
 
         return [
             'bad status' => [
@@ -68,28 +58,16 @@ class FetchedSingleResourceTest extends TestCase
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'data' => [
-                        'type' => $resourceType,
-                        'id' => strval($model->getKey()),
-                        'attributes' => $model->getAttributes()
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->setData($roFactory)->toJson(),
+                $roFactory->toArray(),
                 true,
                 'Expected status code 200 but received 400.'
             ],
             'no headers' => [
                 200,
                 [],
-                [
-                    'data' => [
-                        'type' => $resourceType,
-                        'id' => strval($model->getKey()),
-                        'attributes' => $model->getAttributes()
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->setData($roFactory)->toJson(),
+                $roFactory->toArray(),
                 true,
                 'Header [Content-Type] not present on response.'
             ],
@@ -98,31 +76,18 @@ class FetchedSingleResourceTest extends TestCase
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'data' => [
-                        'type' => $resourceType,
-                        'id' => strval($model->getKey()),
-                        'attributes' => $model->getAttributes(),
-                        'anything' => 'not valid'
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->setData($roFactory)->setMeta(['not valid' => 'error'])->toJson(),
+                $roFactory->toArray(),
                 true,
-                Messages::ONLY_ALLOWED_MEMBERS
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 200,
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'errors' => [
-                        [
-                            'status' => '400'
-                        ]
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->fakeMeta()->toJson(),
+                $roFactory->toArray(),
                 true,
                 sprintf(Messages::HAS_MEMBER, 'data')
             ],
@@ -131,19 +96,8 @@ class FetchedSingleResourceTest extends TestCase
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'data' => [
-                        'type' => $resourceType,
-                        'id' => strval($model->getKey()),
-                        'attributes' => [
-                            'TST_ID' => $model->getKey(),
-                            'TST_NAME' => 'name',
-                            'TST_NUMBER' => 666,
-                            'TST_CREATION_DATE' => null
-                        ]
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->fakeData()->toJson(),
+                $roFactory->toArray(),
                 true,
                 null
             ]

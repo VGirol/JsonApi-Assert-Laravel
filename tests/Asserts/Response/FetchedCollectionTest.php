@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedCollectionTest extends TestCase
@@ -17,22 +18,22 @@ class FetchedCollectionTest extends TestCase
      */
     public function responseFetchedCollection()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
         $status = 200;
-        $content = [
-            'data' => $this->createResourceCollection($collection, $resourceType, false, null)
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->roCollection($collection, $resourceType)->toArray();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $collectionFactory = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_OBJECT);
+        $doc = (new Generator)->document()
+            ->setData($collectionFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
+        Assert::assertFetchedResourceCollectionResponse($response, $collectionFactory->toArray(), $strict);
     }
 
     /**
@@ -47,7 +48,7 @@ class FetchedCollectionTest extends TestCase
         $strict,
         $failureMsg
     ) {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -57,57 +58,42 @@ class FetchedCollectionTest extends TestCase
 
     public function responseFetchedCollectionFailedProvider()
     {
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
         $status = 200;
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->roCollection($collection, $resourceType)->toArray();
+        $collectionFactory = (new Generator)->collection()->fake(Options::FAKE_RESOURCE_OBJECT);
 
         return [
             'bad status' => [
                 400,
                 $headers,
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, false, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($collectionFactory)->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 'Expected status code 200 but received 400.'
             ],
             'no headers' => [
                 $status,
                 [],
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, false, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($collectionFactory)->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 'Header [Content-Type] not present on response.'
             ],
             'no valid structure' => [
                 $status,
                 $headers,
-                [
-                    'data' => $this->createResourceCollection($collection, $resourceType, false, null),
-                    'anything' => 'not valid'
-                ],
-                $expected,
-                false,
-                Messages::ONLY_ALLOWED_MEMBERS
+                (new Generator)->document()->setData($collectionFactory)->setMeta(['not safe' => 'error]'])->toJson(),
+                $collectionFactory->toArray(),
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 $status,
                 $headers,
-                [
-                    'errors' => [
-                        [
-                            'status' => '400'
-                        ]
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->fakeMeta()->toJson(),
+                $collectionFactory->toArray(),
                 false,
                 sprintf(Messages::HAS_MEMBER, 'data')
             ]
@@ -119,24 +105,24 @@ class FetchedCollectionTest extends TestCase
      */
     public function responseFetchedCollectionFailedNext()
     {
-        $resourceType = 'dummy';
-        $collection = $this->createCollection();
         $status = 200;
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $content = [
-            'data' => $this->createResourceCollection($collection, $resourceType, false, 'value')
-        ];
-        $expected = (new Generator)->roCollection($collection, $resourceType)->toArray();
-        $strict = false;
-        $failureMsg = '/'.sprintf(preg_quote(Messages::RESOURCE_IS_NOT_EQUAL), '.*', '.*').'.*/s';
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $collectionfactory = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_OBJECT);
+        $doc = (new Generator)->document()->fakeData();
+
+        $failureMsg = '/' . sprintf(preg_quote(Messages::RESOURCE_IS_NOT_EQUAL), '.*', '.*') . '.*/s';
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureExceptionRegex($failureMsg);
 
-        Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
+        Assert::assertFetchedResourceCollectionResponse($response, $collectionfactory->toArray(), $strict);
     }
 }

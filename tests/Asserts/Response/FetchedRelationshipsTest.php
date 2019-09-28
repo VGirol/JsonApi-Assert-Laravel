@@ -18,19 +18,19 @@ class FetchedRelationshipsTest extends TestCase
     public function responseFetchedEmptyToOneRelationships()
     {
         $status = 200;
-        $content = [
-            'data' => null
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $strict = false;
-        $expected = null;
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+        $riFactory = (new Generator)->resourceIdentifier();
+        $doc = (new Generator)->document()
+            ->setData($riFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertFetchedRelationshipsResponse($response, $expected, $strict);
+        Assert::assertFetchedRelationshipsResponse($response, $riFactory->toArray(), $strict);
     }
 
     /**
@@ -38,22 +38,21 @@ class FetchedRelationshipsTest extends TestCase
      */
     public function responseFetchedToOneRelationships()
     {
-        $strict = false;
-        $resourceType = 'dummy';
-        $model = $this->createModel();
         $status = 200;
-        $content = [
-            'data' => $this->createResource($model, $resourceType, true, null)
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $expected = (new Generator)->resourceIdentifier($model, $resourceType)->toArray();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $riFactory = (new Generator)->resourceIdentifier()->fake();
+        $doc = (new Generator)->document()
+            ->setData($riFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertFetchedRelationshipsResponse($response, $expected, $strict);
+        Assert::assertFetchedRelationshipsResponse($response, $riFactory->toArray(), $strict);
     }
 
     /**
@@ -68,7 +67,7 @@ class FetchedRelationshipsTest extends TestCase
         $strict,
         $failureMsg
     ) {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -82,63 +81,47 @@ class FetchedRelationshipsTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $resourceType = 'dummy';
-        $model = $this->createModel();
-        $expected = (new Generator)->resourceIdentifier($model, $resourceType)->toArray();
+
+        $riFactory = (new Generator)->resourceIdentifier()->fake();
 
         return [
             'wrong status' => [
                 400,
                 $headers,
-                [
-                    'data' => $this->createResource($model, $resourceType, true, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($riFactory)->toJson(),
+                $riFactory->toArray(),
                 false,
                 'Expected status code 200 but received 400.'
             ],
             'no headers' => [
                 $status,
                 [],
-                [
-                    'data' => $this->createResource($model, $resourceType, true, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($riFactory)->toJson(),
+                $riFactory->toArray(),
                 false,
                 'Header [Content-Type] not present on response.'
             ],
             'structure not valid' => [
                 $status,
                 $headers,
-                [
-                    'data' => $this->createResource($model, $resourceType, true, null),
-                    'anything' => 'not valid'
-                ],
-                $expected,
+                (new Generator)->document()->setData($riFactory)->setMeta(['not+safe' => 'error'])->toJson(),
+                $riFactory->toArray(),
                 false,
-                Messages::ONLY_ALLOWED_MEMBERS
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 $status,
                 $headers,
-                [
-                    'errors' => [
-                        [
-                            'status' => '400'
-                        ]
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->fakeMeta()->toJson(),
+                $riFactory->toArray(),
                 false,
                 sprintf(Messages::HAS_MEMBER, 'data')
             ],
             'resource linkage not valid' => [
                 $status,
                 $headers,
-                [
-                    'data' => $this->createResource($model, $resourceType, true, 'value')
-                ],
-                $expected,
+                (new Generator)->document()->fakeData()->toJson(),
+                $riFactory->toArray(),
                 false,
                 null
             ]
