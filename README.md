@@ -104,19 +104,19 @@ If you discover any security related issues, please email [vincent@girol.fr](mai
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/VGirol/VGirolJsonApi-Assert-Laravel/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
-[ico-mutation]: https://badge.stryker-mutator.io/github.com/VGirol/VGirolJsonApi-Assert-Laravel/master
-[ico-downloads]: https://img.shields.io/packagist/dt/VGirol/VGirolJsonApi-Assert-Laravel.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/VGirol/JsonApi-Assert-Laravel/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
+[ico-mutation]: https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Assert-Laravel/master
+[ico-downloads]: https://img.shields.io/packagist/dt/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/VGirol/VGirolJsonApi-Assert-Laravel
-[link-travis]: https://travis-ci.org/VGirol/VGirolJsonApi-Assert-Laravel
-[link-scrutinizer]: https://scrutinizer-ci.com/g/VGirol/VGirolJsonApi-Assert-Laravel/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/VGirol/VGirolJsonApi-Assert-Laravel
-[link-downloads]: https://packagist.org/packages/VGirol/VGirolJsonApi-Assert-Laravel
+[link-packagist]: https://packagist.org/packages/VGirol/JsonApi-Assert-Laravel
+[link-travis]: https://travis-ci.org/VGirol/JsonApi-Assert-Laravel
+[link-scrutinizer]: https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel
+[link-downloads]: https://packagist.org/packages/VGirol/JsonApi-Assert-Laravel
 [link-author]: https://github.com/VGirol
 [link-mutation]: https://infection.github.io
 [link-contributors]: ../../contributors
