@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class ErrorTest extends TestCase
 {
@@ -16,29 +17,25 @@ class ErrorTest extends TestCase
      */
     public function assertIsErrorResponse()
     {
-        $strict = false;
         $status = 406;
-        $errors = [
-            [
-                'status' => strval($status),
-                'title' => 'Not Acceptable',
-                'details' => 'description',
-                'meta' => [
-                    'not strict' => 'error when infection change default value for $strict parameter'
-                ]
-            ]
-        ];
-        $content = [
-            'errors' => $errors
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $strict = false;
+
+        $errorFactory = (new Generator)->error()
+            ->fake()
+            ->set('status', strval($status))
+            ->setMeta([
+                'not strict' => 'error when infection change default value for $strict parameter'
+            ]);
+        $doc = (new Generator)->document()->AddError($errorFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertIsErrorResponse($response, $status, $errors, $strict);
+        Assert::assertIsErrorResponse($response, $status, [$errorFactory->toArray()], $strict);
     }
 
     /**
@@ -280,21 +277,16 @@ class ErrorTest extends TestCase
      */
     public function errorResponseWithInvalidArguments()
     {
-        $strict = false;
         $status = 404;
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $content = [
-            'errors' => [
-                [
-                    'status' => '404',
-                    'title' => 'Not Found',
-                    'details' => 'description'
-                ]
-            ]
-        ];
-        $response = Response::create(json_encode($content), $status, $headers);
+
+        $strict = false;
+
+        $doc = (new Generator)->document()->fakeErrors();
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $expectedErrors = [

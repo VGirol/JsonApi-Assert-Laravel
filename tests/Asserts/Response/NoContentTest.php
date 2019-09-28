@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class NoContentTest extends TestCase
 {
@@ -31,7 +32,7 @@ class NoContentTest extends TestCase
      */
     public function responseNoContentFailed($status, $headers, $content, $failureMsg)
     {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -61,11 +62,7 @@ class NoContentTest extends TestCase
             'has content' => [
                 204,
                 [],
-                [
-                    'meta' => [
-                        'bad' => 'content'
-                    ]
-                ],
+                (new Generator)->document()->fakeMeta()->toJson(),
                 null
             ]
         ];

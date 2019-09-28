@@ -25,16 +25,15 @@ class PaginationTest extends TestCase
         ];
         $meta = ['key' => 'value'];
 
-        $content = (new Generator)
+        $doc = (new Generator)
             ->document()
             ->fakeData()
             ->fakeMeta()
             ->addToMeta(Members::META_PAGINATION, $meta)
             ->fakeLinks()
-            ->addLinks($links)
-            ->toArray();
+            ->addLinks($links);
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $response->assertJsonApiPagination($links, $meta);
@@ -55,17 +54,16 @@ class PaginationTest extends TestCase
         $expectedMeta = [
             'key' => 'value'
         ];
-        $content = (new Generator)
+        $doc = (new Generator)
             ->document()
             ->fakeData()
             ->fakeMeta()
             ->fakeLinks()
-            ->addToMeta(Members::META_PAGINATION, $expectedMeta)
-            ->toArray();
+            ->addToMeta(Members::META_PAGINATION, $expectedMeta);
 
         $failureMsg = null;
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -83,14 +81,13 @@ class PaginationTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $content = (new Generator)
+        $doc = (new Generator)
             ->document()
             ->fakeData()
             ->fakeMeta()
-            ->fakeLinks()
-            ->toArray();
+            ->fakeLinks();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $response->assertJsonApiNoPagination();
@@ -105,17 +102,16 @@ class PaginationTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        $content = (new Generator)
+        $doc = (new Generator)
             ->document()
             ->fakeData()
             ->fakeMeta()
             ->fakeLinks()
-            ->addToMeta(Members::META_PAGINATION, ['key' => 'value'])
-            ->toArray();
+            ->addToMeta(Members::META_PAGINATION, ['key' => 'value']);
 
         $failureMsg = null;
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);

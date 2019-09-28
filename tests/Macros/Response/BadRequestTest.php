@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class BadRequestTest extends TestCase
 {
@@ -16,28 +17,25 @@ class BadRequestTest extends TestCase
      */
     public function response4xx($status)
     {
-        $fn = "assertJsonApiResponse{$status}";
-        $errors = [
-            [
-                'status' => strval($status),
-                'title' => JsonResponse::$statusTexts[$status],
-                'details' => 'description',
-                'meta' => [
-                    'not strict' => 'error when infection change default value for $strict parameter'
-                ]
-            ]
-        ];
-        $content = [
-            'errors' => $errors
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $errorFactory = (new Generator)->error()
+            ->fake()
+            ->set('status', strval($status))
+            ->set('title', JsonResponse::$statusTexts[$status])
+            ->setMeta([
+                'not strict' => 'error when infection change default value for $strict parameter'
+            ]);
+        $doc = (new Generator)->document()->AddError($errorFactory);
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->{$fn}($errors);
+        $fn = "assertJsonApiResponse{$status}";
+
+        $response->{$fn}([$errorFactory->toArray()]);
     }
 
     /**
@@ -46,30 +44,26 @@ class BadRequestTest extends TestCase
      */
     public function response4xxFailed($status)
     {
-        $fn = "assertJsonApiResponse{$status}";
-        $errors = [
-            [
-                'status' => strval($status),
-                'title' => JsonResponse::$statusTexts[$status],
-                'details' => 'description',
-                'meta' => [
-                    'not strict' => 'error when infection change default value for $strict parameter'
-                ]
-            ]
-        ];
-        $content = [
-            'errors' => $errors
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status + 1, $headers);
+        $errorFactory = (new Generator)->error()
+            ->fake()
+            ->set('status', strval($status))
+            ->set('title', JsonResponse::$statusTexts[$status])
+            ->setMeta([
+                'not strict' => 'error when infection change default value for $strict parameter'
+            ]);
+        $doc = (new Generator)->document()->AddError($errorFactory);
+
+        $response = Response::create($doc->toJson(), $status + 1, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException();
 
-        $response->{$fn}($errors);
+        $fn = "assertJsonApiResponse{$status}";
+        $response->{$fn}([$errorFactory->toArray()]);
     }
 
     public function response4xxProvider()

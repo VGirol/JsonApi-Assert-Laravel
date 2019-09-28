@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Laravel\Generator;
 
 class DeletedTest extends TestCase
 {
@@ -17,21 +18,17 @@ class DeletedTest extends TestCase
     public function responseDeleted()
     {
         $status = 200;
-        $strict = false;
-        $meta = [
-            'message' => 'Deleting succeed'
-        ];
-        $content = [
-            'meta' => $meta
-        ];
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
+        $strict = false;
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $doc = (new Generator)->document()->fakeMeta();
+
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertIsDeletedResponse($response, $meta, $strict);
+        Assert::assertIsDeletedResponse($response, $doc->meta, $strict);
     }
 
     /**
@@ -40,7 +37,7 @@ class DeletedTest extends TestCase
      */
     public function responseDeletedFailed($status, $headers, $content, $meta, $strict, $failureMsg)
     {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -58,15 +55,7 @@ class DeletedTest extends TestCase
             'wrong status code' => [
                 404,
                 $headers,
-                [
-                    'errors' => [
-                        [
-                            'status' => '404',
-                            'title' => 'Not Found',
-                            'details' => 'description'
-                        ]
-                    ]
-                ],
+                (new Generator)->document()->fakeErrors()->toJson(),
                 null,
                 false,
                 'Expected status code 200 but received 404.'
@@ -74,11 +63,7 @@ class DeletedTest extends TestCase
             'bad header' => [
                 200,
                 [],
-                [
-                    'meta' => [
-                        'result' => 'it works'
-                    ]
-                ],
+                (new Generator)->document()->fakeMeta()->toJson(),
                 null,
                 false,
                 'Header [Content-Type] not present on response.'
@@ -86,11 +71,7 @@ class DeletedTest extends TestCase
             'structure not valid' => [
                 200,
                 $headers,
-                [
-                    'meta' => [
-                        'result not safe' => 'failed'
-                    ]
-                ],
+                (new Generator)->document()->setMeta(['not safe' => 'error'])->toJson(),
                 null,
                 true,
                 Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
@@ -98,15 +79,7 @@ class DeletedTest extends TestCase
             'not allowed member' => [
                 200,
                 $headers,
-                [
-                    'data' => [
-                        'type' => 'anything',
-                        'id' => '1'
-                    ],
-                    'meta' => [
-                        'result' => 'it works'
-                    ]
-                ],
+                (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
                 null,
                 false,
                 Messages::ONLY_ALLOWED_MEMBERS
@@ -114,23 +87,15 @@ class DeletedTest extends TestCase
             'no meta (structure not valid)' => [
                 200,
                 $headers,
-                [
-                    'jsonapi' => [
-                        'version' => '1.0'
-                    ]
-                ],
+                (new Generator)->document()->fakeJsonapi()->toJson(),
                 null,
                 false,
                 sprintf(Messages::TOP_LEVEL_MEMBERS, implode('", "', ['data', 'errors', 'meta']))
             ],
-            'meta not has expected' => [
+            'meta not as expected' => [
                 200,
                 $headers,
-                [
-                    'meta' => [
-                        'anything' => 'wrong'
-                    ]
-                ],
+                (new Generator)->document()->fakeMeta()->toJson(),
                 [
                     'anything' => 'to see'
                 ],

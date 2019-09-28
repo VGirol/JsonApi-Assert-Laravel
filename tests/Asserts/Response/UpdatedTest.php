@@ -23,7 +23,7 @@ class UpdatedTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         Assert::assertIsUpdatedResponse($response, $expected, $strict);
@@ -31,35 +31,22 @@ class UpdatedTest extends TestCase
 
     public function responseUpdatedProvider()
     {
-        $selfUrl = 'url';
-        $additional = [
-            'links' => [
-                'self' => $selfUrl
-            ]
-        ];
-
-        $resourceType = 'dummy';
-        $model = $this->createModel();
-        $content = [
-            'data' => $this->createResource($model, $resourceType, false, null, $additional)
-        ];
-
-        $expected = (new Generator)->resourceObject($model, $resourceType)
-            ->addLink('self', $selfUrl)
-            ->toArray();
+        $roFactory = (new Generator)->resourceObject()
+            ->fake()
+            ->fakeLinks();
 
         return [
             'with data' => [
-                $content,
-                $expected,
+                (new Generator)->document()
+                    ->setData($roFactory)
+                    ->toJson(),
+                $roFactory->toArray(),
                 false
             ],
             'with meta' => [
-                [
-                    'meta' => [
-                        'valid' => 'response'
-                    ]
-                ],
+                (new Generator)->document()
+                    ->fakeMeta()
+                    ->toJson(),
                 null,
                 false
             ]
@@ -72,7 +59,7 @@ class UpdatedTest extends TestCase
      */
     public function responseUpdatedFailed($status, $headers, $content, $expected, $strict, $failureMsg)
     {
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -82,10 +69,8 @@ class UpdatedTest extends TestCase
 
     public function responseUpdatedFailedProvider()
     {
-        $resourceType = 'dummy';
-        $model = $this->createModel();
-
-        $expected = (new Generator)->resourceObject($model, $resourceType)->toArray();
+        $roFactory = (new Generator)->resourceObject()
+            ->fake();
 
         return [
             'wrong status code' => [
@@ -93,20 +78,16 @@ class UpdatedTest extends TestCase
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'data' => $this->createResource($model, $resourceType, false, null, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($roFactory)->toJson(),
+                $roFactory->toArray(),
                 false,
                 'Expected status code 200 but received 202.'
             ],
             'no content-type header' => [
                 200,
                 [],
-                [
-                    'data' => $this->createResource($model, $resourceType, false, null, null)
-                ],
-                $expected,
+                (new Generator)->document()->setData($roFactory)->toJson(),
+                $roFactory->toArray(),
                 false,
                 'Header [Content-Type] not present on response.'
             ],
@@ -115,40 +96,28 @@ class UpdatedTest extends TestCase
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'data' => $this->createResource($model, $resourceType, false, 'structure', null)
-                ],
-                $expected,
-                false,
-                Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING
+                (new Generator)->document()->setData($roFactory)->addToMeta('not safe', 'error')->toJson(),
+                $roFactory->toArray(),
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'no meta nor data member' => [
                 200,
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'errors' => [
-                        [
-                            'status' => '406',
-                            'title' => 'Not Acceptable',
-                            'details' => 'description'
-                        ]
-                    ]
-                ],
-                $expected,
+                (new Generator)->document()->fakeErrors()->toJson(),
+                $roFactory->toArray(),
                 false,
-                null
+                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['meta', 'data']))
             ],
             'data attributes member not valid' => [
                 200,
                 [
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
-                [
-                    'data' => $this->createResource($model, $resourceType, false, 'value', null)
-                ],
-                $expected,
+                (new Generator)->document()->fakeData()->toJson(),
+                $roFactory->toArray(),
                 false,
                 null
             ]

@@ -33,10 +33,10 @@ class NoContentResponseTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
         $status = 204;
-        $content = null;
+
         $failureMsg = 'Unexpected header [Content-Type] is present on response.';
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create('', $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);

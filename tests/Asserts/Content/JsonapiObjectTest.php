@@ -23,17 +23,13 @@ class JsonapiObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $jsonapi = (new Generator)->jsonapiObject()
-            ->fake()
-            ->toArray();
-        $content = [
-            Members::JSONAPI => $jsonapi
-        ];
+        $doc = (new Generator)->document()
+            ->fakeJsonapi();
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertResponseJsonapiObjectEquals($response, $jsonapi);
+        Assert::assertResponseJsonapiObjectEquals($response, $doc->jsonapi->toArray());
     }
 
     /**
@@ -47,7 +43,7 @@ class JsonapiObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailureException($failureMsg);
@@ -64,20 +60,12 @@ class JsonapiObjectTest extends TestCase
 
         return [
             'no "jsonapi" member' => [
-                [
-                    'anything' => 'error'
-                ],
+                (new Generator)->document()->fakeMeta()->toJson(),
                 $jsonapi,
                 sprintf(Messages::HAS_MEMBER, Members::JSONAPI)
             ],
             'not equals' => [
-                [
-                    Members::JSONAPI => [
-                        'meta' => [
-                            'anything' => 'error'
-                        ]
-                    ]
-                ],
+                (new Generator)->document()->fakeJsonapi()->toJson(),
                 $jsonapi,
                 null
             ]
@@ -94,15 +82,12 @@ class JsonapiObjectTest extends TestCase
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
 
-        $jsonapi = (new Generator)->jsonapiObject()
-            ->fake()
-            ->toArray();
-        $content = [
-            Members::JSONAPI => $jsonapi
-        ];
+        $doc = (new Generator)->document()
+            ->fakeJsonapi();
+
         $invalidExpected = 'error';
 
-        $response = Response::create(json_encode($content), $status, $headers);
+        $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setInvalidArgumentException(2, 'array', $invalidExpected);
