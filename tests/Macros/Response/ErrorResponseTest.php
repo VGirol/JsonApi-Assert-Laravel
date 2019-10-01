@@ -53,12 +53,12 @@ class ErrorResponseTest extends TestCase
             ]);
         $doc = (new Generator)->document()->fakeErrors();
 
-        $failureMsg = '/' . str_replace('%s', '.*', preg_quote(Messages::ERRORS_OBJECT_DOES_NOT_CONTAIN_EXPECTED_ERROR)) . '/s';
+        $failureMsg = $this->formatAsRegex(Messages::ERRORS_OBJECT_DOES_NOT_CONTAIN_EXPECTED_ERROR);
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureExceptionRegex($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiErrorResponse($status, [$errorFactory->toArray()]);
     }

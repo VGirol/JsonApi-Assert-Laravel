@@ -43,7 +43,7 @@ class FetchedSingleResourceTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertFetchedSingleResourceResponse($response, $expected, $strict);
     }
@@ -99,7 +99,7 @@ class FetchedSingleResourceTest extends TestCase
                 (new Generator)->document()->fakeData()->toJson(),
                 $roFactory->toArray(),
                 true,
-                null
+                Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
             ]
         ];
     }

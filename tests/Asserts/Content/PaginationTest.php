@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
+use VGirol\JsonApiAssert\Laravel\Messages as LaravelMessages;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
@@ -68,7 +69,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException(sprintf(Messages::NOT_HAS_MEMBER, Members::LINK_PAGINATION_LAST));
+        $this->setFailure(sprintf(Messages::NOT_HAS_MEMBER, Members::LINK_PAGINATION_LAST));
 
         Assert::assertResponseHasNoPaginationLinks($response);
     }
@@ -115,7 +116,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertResponseHasPaginationLinks($response, $expected);
     }
@@ -136,7 +137,7 @@ class PaginationTest extends TestCase
                     ->fakeMeta()
                     ->fakeLinks()
                     ->toJson(),
-                null
+                Messages::PAGINATION_LINKS_NOT_EQUAL
             ]
         ];
     }
@@ -195,7 +196,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException(sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION));
+        $this->setFailure(sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION));
 
         Assert::assertResponseHasNoPaginationMeta($response);
     }
@@ -239,7 +240,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertResponseHasPaginationMeta($response, $expected);
     }
@@ -280,7 +281,7 @@ class PaginationTest extends TestCase
                     ->addToMeta(Members::META_PAGINATION, ['error' => 'not equal'])
                     ->toJson(),
                 $expected,
-                null
+                LaravelMessages::PAGINATION_META_IS_NOT_AS_EXPECTED
             ]
         ];
     }
@@ -328,7 +329,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertResponseHasPagination($response, $expectedLinks, $expectedMeta);
     }
@@ -353,7 +354,7 @@ class PaginationTest extends TestCase
                     ->toJson(),
                 $links,
                 $meta,
-                null
+                Messages::PAGINATION_LINKS_NOT_EQUAL
             ],
             'no pagination meta' => [
                 (new Generator)
@@ -365,7 +366,7 @@ class PaginationTest extends TestCase
                     ->toJson(),
                 $links,
                 $meta,
-                null
+                sprintf(Messages::HAS_MEMBER, Members::META_PAGINATION)
             ]
         ];
     }
@@ -406,7 +407,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertResponseHasNoPagination($response);
     }

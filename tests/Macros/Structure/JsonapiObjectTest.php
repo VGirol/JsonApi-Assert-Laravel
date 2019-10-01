@@ -52,7 +52,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiJsonapiObject($expected);
     }

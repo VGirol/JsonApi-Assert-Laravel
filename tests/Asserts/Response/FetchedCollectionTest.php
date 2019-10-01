@@ -51,7 +51,7 @@ class FetchedCollectionTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
     }
@@ -116,12 +116,12 @@ class FetchedCollectionTest extends TestCase
             ->fake(Options::FAKE_RESOURCE_OBJECT);
         $doc = (new Generator)->document()->fakeData();
 
-        $failureMsg = '/' . sprintf(preg_quote(Messages::RESOURCE_IS_NOT_EQUAL), '.*', '.*') . '.*/s';
+        $failureMsg = $this->formatAsRegex(Messages::RESOURCE_IS_NOT_EQUAL);
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureExceptionRegex($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertFetchedResourceCollectionResponse($response, $collectionfactory->toArray(), $strict);
     }

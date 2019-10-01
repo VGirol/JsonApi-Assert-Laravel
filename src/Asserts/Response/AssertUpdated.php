@@ -53,6 +53,9 @@ trait AssertUpdated
         // Checks data member
         if (isset($json[Members::DATA])) {
             $data = $json[Members::DATA];
+
+            static::assertIsNotArrayOfObjects($data);
+
             static::assertResourceObjectEquals(
                 $expected,
                 $data

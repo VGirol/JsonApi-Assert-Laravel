@@ -1,22 +1,35 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Laravel\Asserts;
+namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 
-use DMS\PHPUnitExtensions\ArraySubset\Assert as AssertArray;
 use Illuminate\Foundation\Testing\TestResponse;
-use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Members;
 
+/**
+ * Fetched response
+ */
 trait AssertRelationships
 {
-    public static function assertResourceObjectContainsRelationship(TestResponse $response, $expectedCollection, $expectedResourceType, $expectedRelationshipName, $resource, $strict)
+    public static function assertResourceObjectContainsRelationships(TestResponse $response, $expected, $resource)
+    { }
+
+    public static function assertResourceObjectContainsRelationship(TestResponse $response, $expected, $resource)
     {
-        static::assertHasRelationships($resource);
-        $relationships = $resource['relationships'];
+        if (!\is_array($expected)) {
+            static::invalidArgument(
+                2,
+                'array',
+                $expected
+            );
+        }
 
-        static::assertHasMember($expectedRelationshipName, $relationships);
-        $rel = $relationships[$expectedRelationshipName];
-        PHPUnit::assertEquals($expectedCollection->count(), count($rel['data']));
+        // Decode JSON response
+        $json = $response->json();
 
-        static::assertResourceLinkageCollectionEquals($expectedCollection, $expectedResourceType, $rel['data'], $strict);
+        static::assertHasMember(Members::INCLUDED, $json);
+
+        $included = $json[Members::INCLUDED];
+
+        static::assertIncludeObjectContains($expected, $included);
     }
 }

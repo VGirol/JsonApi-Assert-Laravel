@@ -5,6 +5,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
+use VGirol\JsonApiAssert\Laravel\Messages;
 use VGirol\JsonApiAssert\Members;
 
 /**
@@ -45,6 +46,9 @@ trait AssertCreated
         // Checks data member
         static::assertHasData($json);
         $data = $json[Members::DATA];
+
+        static::assertIsNotArrayOfObjects($data);
+
         static::assertResourceObjectEquals(
             $expected,
             $data
@@ -55,7 +59,8 @@ trait AssertCreated
         if (($header !== null) && isset($data[Members::LINKS][Members::LINK_SELF])) {
             PHPUnit::assertEquals(
                 $header,
-                $data[Members::LINKS][Members::LINK_SELF]
+                $data[Members::LINKS][Members::LINK_SELF],
+                Messages::LOCATION_HEADER_IS_NOT_AS_EXPECTED
             );
         }
     }

@@ -54,7 +54,7 @@ class ErrorTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertIsErrorResponse($response, $expectedStatus, $expectedErrors, $strict);
     }
@@ -113,7 +113,7 @@ class ErrorTest extends TestCase
                     ]
                 ],
                 false,
-                null
+                $this->formatAsRegex('Header [%s] was found, but value [%s] does not match [%s].')
             ],
             'not valid structure' => [
                 404,
@@ -236,7 +236,7 @@ class ErrorTest extends TestCase
                     ]
                 ],
                 false,
-                null
+                $this->formatAsRegex(Messages::ERRORS_OBJECT_DOES_NOT_CONTAIN_EXPECTED_ERROR)
             ],
             'not strict' => [
                 406,

@@ -4,6 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Laravel\Messages;
 use VGirol\JsonApiAssert\Members;
 
 /**
@@ -94,8 +95,13 @@ trait AssertPagination
         $meta = $json[Members::META];
 
         static::assertHasMember(Members::META_PAGINATION, $meta);
+
         $pagination = $meta[Members::META_PAGINATION];
-        PHPUnit::assertEquals($expected, $pagination);
+        PHPUnit::assertEquals(
+            $expected,
+            $pagination,
+            Messages::PAGINATION_META_IS_NOT_AS_EXPECTED
+        );
     }
 
     /**

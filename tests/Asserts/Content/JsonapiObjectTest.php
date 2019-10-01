@@ -46,7 +46,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertResponseJsonapiObjectEquals($response, $expected);
     }
@@ -67,7 +67,7 @@ class JsonapiObjectTest extends TestCase
             'not equals' => [
                 (new Generator)->document()->fakeJsonapi()->toJson(),
                 $jsonapi,
-                null
+                $this->formatAsRegex(Messages::JSONAPI_OBJECT_NOT_EQUAL)
             ]
         ];
     }

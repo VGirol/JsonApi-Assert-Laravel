@@ -5,6 +5,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
+use VGirol\JsonApiAssert\Laravel\Messages;
 use VGirol\JsonApiAssert\Members;
 
 /**
@@ -55,7 +56,8 @@ trait AssertDeleted
         if ($expectedMeta !== null) {
             PHPUnit::assertEquals(
                 $expectedMeta,
-                $meta
+                $meta,
+                Messages::META_OBJECT_IS_NOT_AS_EXPECTED
             );
         }
     }

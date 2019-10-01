@@ -74,7 +74,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertFetchedRelationshipsResponse($response, $expected, $strict);
     }
@@ -85,8 +85,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
         $headers = [
             HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
         ];
-        // $resourceType = 'dummy';
-        // $collection = $this->createCollection();
+
         $collectionFactory = (new Generator)->collection()
             ->fake(Options::FAKE_RESOURCE_IDENTIFIER);
 
@@ -129,7 +128,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
                 (new Generator)->document()->fakeData()->toJson(),
                 $collectionFactory->toArray(),
                 false,
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }

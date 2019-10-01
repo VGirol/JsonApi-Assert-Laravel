@@ -39,7 +39,7 @@ class NoContentResponseTest extends TestCase
         $response = Response::create('', $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiNoContent();
     }

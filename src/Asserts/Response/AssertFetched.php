@@ -44,6 +44,9 @@ trait AssertFetched
         // Checks data member
         static::assertHasData($json);
         $data = $json[Members::DATA];
+
+        static::assertIsNotArrayOfObjects($data);
+
         static::assertResourceObjectEquals(
             $expected,
             $data

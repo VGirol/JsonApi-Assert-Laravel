@@ -46,7 +46,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiDocumentLinksObjectEquals($expected);
     }
@@ -66,7 +66,7 @@ class LinksObjectTest extends TestCase
             'not equals' => [
                 (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
                 $doc->links,
-                null
+                $this->formatAsRegex('Failed asserting that %s equals %s.')
             ]
         ];
     }
@@ -130,7 +130,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiDocumentLinksObjectContains($expected);
     }
@@ -150,7 +150,7 @@ class LinksObjectTest extends TestCase
             'does not contain' => [
                 (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
                 $doc->links,
-                null
+                $this->formatAsRegex('Failed asserting that %s equals %s.')
             ]
         ];
     }

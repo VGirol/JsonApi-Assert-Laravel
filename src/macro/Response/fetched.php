@@ -70,6 +70,15 @@ TestResponse::macro(
     }
 );
 
-TestResponse::macro('assertJsonApiIncludeContains', function ($expected) {
-    Assert::assertResponseIncludeContains($this, $expected);
-});
+TestResponse::macro(
+    'assertJsonApiContainsInclude',
+    /**
+     * @param array<array> $expected
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    function ($expected) {
+        Assert::assertResponseContainsInclude($this, $expected);
+    }
+);

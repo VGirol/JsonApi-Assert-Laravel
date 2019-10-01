@@ -35,7 +35,7 @@ class NoContentTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertIsNoContentResponse($response);
     }
@@ -63,7 +63,7 @@ class NoContentTest extends TestCase
                 204,
                 [],
                 (new Generator)->document()->fakeMeta()->toJson(),
-                null
+                'Failed asserting that a string is empty.'
             ]
         ];
     }
