@@ -14,8 +14,9 @@ class FetchedSingleResourceTest extends TestCase
 {
     /**
      * @test
+     * @dataProvider fetchedSingleResourceProvider
      */
-    public function fetchedSingleResource()
+    public function fetchedSingleResource($content, $expected)
     {
         $status = 200;
         $headers = [
@@ -24,14 +25,27 @@ class FetchedSingleResourceTest extends TestCase
 
         $strict = false;
 
-        $roFactory = (new Generator)->resourceObject()
-            ->fake();
-        $doc = (new Generator)->document()->setData($roFactory);
-
-        $response = Response::create($doc->toJson(), $status, $headers);
+        $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertFetchedSingleResourceResponse($response, $roFactory->toArray(), $strict);
+        Assert::assertFetchedSingleResourceResponse($response, $expected, $strict);
+    }
+
+    public function fetchedSingleResourceProvider()
+    {
+        $roFactory = (new Generator)->resourceObject()
+            ->fake();
+
+        return [
+            'resource object' => [
+                (new Generator)->document()->setData($roFactory)->toJson(),
+                $roFactory->toArray()
+            ],
+            'null' => [
+                (new Generator)->document()->setData(null)->toJson(),
+                null
+            ]
+        ];
     }
 
     /**

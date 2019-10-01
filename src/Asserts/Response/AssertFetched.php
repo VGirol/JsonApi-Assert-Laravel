@@ -15,7 +15,7 @@ trait AssertFetched
      * Asserts that the response has "200 Ok" status code and valid content.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected The expected resource object
+     * @param array<string, mixed>|null $expected The expected resource object
      * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
@@ -44,6 +44,10 @@ trait AssertFetched
         // Checks data member
         static::assertHasData($json);
         $data = $json[Members::DATA];
+
+        if ($data === null) {
+            return;
+        }
 
         static::assertIsNotArrayOfObjects($data);
 
