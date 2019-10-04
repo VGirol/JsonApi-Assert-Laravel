@@ -6,7 +6,8 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiConstant\Members;
+use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class PaginationTest extends TestCase
@@ -61,12 +62,12 @@ class PaginationTest extends TestCase
             ->fakeLinks()
             ->addToMeta(Members::META_PAGINATION, $expectedMeta);
 
-        $failureMsg = null;
+        $failureMsg = Messages::PAGINATION_LINKS_NOT_EQUAL;
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiPagination($expectedLinks, $expectedMeta);
     }
@@ -109,12 +110,12 @@ class PaginationTest extends TestCase
             ->fakeLinks()
             ->addToMeta(Members::META_PAGINATION, ['key' => 'value']);
 
-        $failureMsg = null;
+        $failureMsg = sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION);
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiNoPagination();
     }

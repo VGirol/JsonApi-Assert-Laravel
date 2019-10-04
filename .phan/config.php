@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 use Phan\Issue;
 
@@ -283,6 +284,10 @@ return [
         // 'PhanPluginDescriptionlessCommentOnProtectedMethod',
         // 'PhanPluginNoCommentOnPrivateMethod',
         // 'PhanPluginDescriptionlessCommentOnPrivateMethod',
+        'PhanPluginUnknownArrayMethodParamType',
+        'PhanPluginUnknownArrayMethodReturnType',
+        'PhanPluginUnknownArrayPropertyType',
+        'PhanPluginUnknownArrayClosureReturnType'
     ],
 
     // If empty, no filter against issues types will be applied.

@@ -5,7 +5,8 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiAssert\Laravel\Messages;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test response returned after resource creation.
@@ -16,8 +17,8 @@ trait AssertCreated
      * Asserts that a response object is a valid "201 Created" response following a creation request.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected The expected newly created resource object
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array        $expected The expected newly created resource object
+     * @param boolean      $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -45,6 +46,9 @@ trait AssertCreated
         // Checks data member
         static::assertHasData($json);
         $data = $json[Members::DATA];
+
+        static::assertIsNotArrayOfObjects($data);
+
         static::assertResourceObjectEquals(
             $expected,
             $data
@@ -55,7 +59,8 @@ trait AssertCreated
         if (($header !== null) && isset($data[Members::LINKS][Members::LINK_SELF])) {
             PHPUnit::assertEquals(
                 $header,
-                $data[Members::LINKS][Members::LINK_SELF]
+                $data[Members::LINKS][Members::LINK_SELF],
+                Messages::LOCATION_HEADER_IS_NOT_AS_EXPECTED
             );
         }
     }

@@ -7,7 +7,6 @@ use VGirol\JsonApiAssert\Laravel\Asserts\Content\AssertIncluded;
 use VGirol\JsonApiAssert\Laravel\Asserts\Content\AssertJsonapiObject;
 use VGirol\JsonApiAssert\Laravel\Asserts\Content\AssertLinks;
 use VGirol\JsonApiAssert\Laravel\Asserts\Content\AssertPagination;
-use VGirol\JsonApiAssert\Laravel\Asserts\Content\AssertRelationships;
 use VGirol\JsonApiAssert\Laravel\Asserts\Response\AssertCreated;
 use VGirol\JsonApiAssert\Laravel\Asserts\Response\AssertDeleted;
 use VGirol\JsonApiAssert\Laravel\Asserts\Response\AssertErrorResponse;
@@ -35,5 +34,4 @@ class Assert extends JsonApiAssert
     use AssertLinks;
     use AssertJsonapiObject;
     use AssertIncluded;
-    use AssertRelationships;
 }

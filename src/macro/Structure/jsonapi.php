@@ -6,7 +6,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 TestResponse::macro(
     'assertJsonApiJsonapiObject',
     /**
-     * @param array<string, mixed> $expected
+     * @param array $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

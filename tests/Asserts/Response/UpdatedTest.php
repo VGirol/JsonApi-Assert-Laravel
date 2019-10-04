@@ -62,7 +62,7 @@ class UpdatedTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertIsUpdatedResponse($response, $expected, $strict);
     }
@@ -119,7 +119,7 @@ class UpdatedTest extends TestCase
                 (new Generator)->document()->fakeData()->toJson(),
                 $roFactory->toArray(),
                 false,
-                null
+                Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
             ]
         ];
     }

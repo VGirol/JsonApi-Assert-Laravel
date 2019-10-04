@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
@@ -29,7 +29,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertResponseJsonapiObjectEquals($response, $doc->jsonapi->toArray());
+        Assert::assertResponseJsonapiObjectEquals($response, $doc->getJsonapi()->toArray());
     }
 
     /**
@@ -46,7 +46,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertResponseJsonapiObjectEquals($response, $expected);
     }
@@ -67,7 +67,7 @@ class JsonapiObjectTest extends TestCase
             'not equals' => [
                 (new Generator)->document()->fakeJsonapi()->toJson(),
                 $jsonapi,
-                null
+                $this->formatAsRegex(Messages::JSONAPI_OBJECT_NOT_EQUAL)
             ]
         ];
     }

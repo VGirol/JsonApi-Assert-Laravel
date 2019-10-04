@@ -70,7 +70,7 @@ class FetchedRelationshipsTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertFetchedRelationshipsResponse($response, $expected, $strict);
     }
@@ -123,7 +123,7 @@ class FetchedRelationshipsTest extends TestCase
                 (new Generator)->document()->fakeData()->toJson(),
                 $riFactory->toArray(),
                 false,
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }

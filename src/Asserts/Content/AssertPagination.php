@@ -4,7 +4,8 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiAssert\Laravel\Messages;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test pagination informations (links and meta).
@@ -38,7 +39,7 @@ trait AssertPagination
      * Asserts that a document have the expected pagination links.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected
+     * @param array        $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -80,7 +81,7 @@ trait AssertPagination
      * Asserts that a document have pagination meta.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected
+     * @param array        $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -94,8 +95,13 @@ trait AssertPagination
         $meta = $json[Members::META];
 
         static::assertHasMember(Members::META_PAGINATION, $meta);
+
         $pagination = $meta[Members::META_PAGINATION];
-        PHPUnit::assertEquals($expected, $pagination);
+        PHPUnit::assertEquals(
+            $expected,
+            $pagination,
+            Messages::PAGINATION_META_IS_NOT_AS_EXPECTED
+        );
     }
 
     /**
@@ -116,8 +122,8 @@ trait AssertPagination
      * Asserts that a document have pagination informations (links and meta).
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expectedLinks
-     * @param array<string, mixed> $expectedMeta
+     * @param array        $expectedLinks
+     * @param array        $expectedMeta
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

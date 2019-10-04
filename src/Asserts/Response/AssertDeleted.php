@@ -5,7 +5,8 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiAssert\Laravel\Messages;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test response returned after resource deletion.
@@ -16,8 +17,8 @@ trait AssertDeleted
      * Asserts that a response object is a valid "200 OK" response following a deletion request.
      *
      * @param TestResponse $response
-     * @param array<string, mixed>|null $expectedMeta If not null, it is the expected "meta" object.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array|null   $expectedMeta If not null, it is the expected "meta" object.
+     * @param boolean      $strict       If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -55,7 +56,8 @@ trait AssertDeleted
         if ($expectedMeta !== null) {
             PHPUnit::assertEquals(
                 $expectedMeta,
-                $meta
+                $meta,
+                Messages::META_OBJECT_IS_NOT_AS_EXPECTED
             );
         }
     }

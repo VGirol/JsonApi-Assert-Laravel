@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
+use VGirol\JsonApiAssert\Laravel\Messages as LaravelMessages;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiFaker\Laravel\Generator;
@@ -32,7 +33,7 @@ class CreatedTest extends TestCase
             ->setData($resFactory);
 
         if ($withLocationHeader) {
-            $headers['Location'] = $resFactory->links['self'];
+            $headers['Location'] = $resFactory->getLinks()['self'];
         }
 
         $response = Response::create($doc->toJson(), $status, $headers);
@@ -62,7 +63,7 @@ class CreatedTest extends TestCase
         $response = Response::create($content, $code, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         Assert::assertIsCreatedResponse($response, $expected, $strict);
     }
@@ -116,7 +117,7 @@ class CreatedTest extends TestCase
                 (new Generator)->document()->fakeData()->toJson(),
                 $resFactory->toArray(),
                 false,
-                null
+                Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
             ],
             'location header not valid' => [
                 201,
@@ -127,7 +128,7 @@ class CreatedTest extends TestCase
                 (new Generator)->document()->setData($resFactory)->setMeta(['not safe' => 'error'])->toJson(),
                 $resFactory->toArray(),
                 false,
-                null
+                LaravelMessages::LOCATION_HEADER_IS_NOT_AS_EXPECTED
             ]
         ];
     }

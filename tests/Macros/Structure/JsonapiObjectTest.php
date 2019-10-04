@@ -6,8 +6,8 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
-use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class JsonapiObjectTest extends TestCase
@@ -28,7 +28,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiJsonapiObject($doc->jsonapi->toArray());
+        $response->assertJsonApiJsonapiObject($doc->getJsonapi()->toArray());
     }
 
     /**
@@ -52,7 +52,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiJsonapiObject($expected);
     }

@@ -6,8 +6,8 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
-use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class LinksObjectTest extends TestCase
@@ -29,7 +29,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiDocumentLinksObjectEquals($doc->links);
+        $response->assertJsonApiDocumentLinksObjectEquals($doc->getLinks());
     }
 
     /**
@@ -46,7 +46,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiDocumentLinksObjectEquals($expected);
     }
@@ -60,13 +60,13 @@ class LinksObjectTest extends TestCase
         return [
             'no "links" member' => [
                 (new Generator)->document()->fakeMeta()->toJson(),
-                $doc->links,
+                $doc->getLinks(),
                 sprintf(Messages::HAS_MEMBER, Members::LINKS)
             ],
             'not equals' => [
                 (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
-                $doc->links,
-                null
+                $doc->getLinks(),
+                $this->formatAsRegex('Failed asserting that %s equals %s.')
             ]
         ];
     }
@@ -130,7 +130,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailureException($failureMsg);
+        $this->setFailure($failureMsg);
 
         $response->assertJsonApiDocumentLinksObjectContains($expected);
     }
@@ -144,13 +144,13 @@ class LinksObjectTest extends TestCase
         return [
             'no "links" member' => [
                 (new Generator)->document()->fakeMeta()->toJson(),
-                $doc->links,
+                $doc->getLinks(),
                 sprintf(Messages::HAS_MEMBER, Members::LINKS)
             ],
             'does not contain' => [
                 (new Generator)->document()->fakeMeta()->fakeLinks()->toJson(),
-                $doc->links,
-                null
+                $doc->getLinks(),
+                $this->formatAsRegex('Failed asserting that %s equals %s.')
             ]
         ];
     }

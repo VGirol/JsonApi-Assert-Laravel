@@ -4,7 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test error response.
@@ -16,8 +16,8 @@ trait AssertErrorResponse
      *
      * @param TestResponse $response
      * @param integer $expectedStatusCode
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors     An array of the expected error objects.
+     * @param boolean $strict             If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

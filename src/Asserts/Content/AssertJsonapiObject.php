@@ -3,7 +3,7 @@
 namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 
 use Illuminate\Foundation\Testing\TestResponse;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test jsonapi object.
@@ -14,7 +14,7 @@ trait AssertJsonapiObject
      * Asserts that a jsonapi object equals an expected array.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected
+     * @param array       $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

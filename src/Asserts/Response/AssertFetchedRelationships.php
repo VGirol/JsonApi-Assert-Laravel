@@ -4,7 +4,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Response;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test fetching relationship response.
@@ -15,8 +15,8 @@ trait AssertFetchedRelationships
      * Asserts that the response has "200 Ok" status code and valid content.
      *
      * @param TestResponse $response
-     * @param array<array>|null $expected The expected collection of resource identifier objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array|null   $expected The expected collection of resource identifier objects.
+     * @param boolean      $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
