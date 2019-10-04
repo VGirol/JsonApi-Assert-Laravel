@@ -14,7 +14,8 @@ abstract class TestCase extends BaseTestCase
      * Load package service provider
      *
      * @param  \Illuminate\Foundation\Application $app
-     * @return VGirol\JsonApiAssert\Laravel\JsonApiAssertServiceProvider
+     *
+     * @return array
      */
     protected function getPackageProviders($app)
     {
