@@ -22,15 +22,16 @@
         "php": "^7.2",
         "phpunit/phpunit": "^8.0",
         "laravel/framework": "~5.8|^6.0",
+        "vgirol/jsonapi-constant": "dev-master",
         "vgirol/jsonapi-assert": "dev-master"
     },
     "require-dev": {
         "infection/infection": "^0.14",
         "orchestra/testbench": "~3.8|^4.0",
+        "vgirol/jsonapi-faker": "dev-master",
         "vgirol/jsonapi-faker-laravel": "dev-master"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "VGirol\\JsonApiAssert\\Laravel\\": "src/"
