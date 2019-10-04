@@ -22,13 +22,22 @@
         "php": "^7.2",
         "laravel/framework": "~5.8.0|^6.0",
         "phpunit/phpunit": "^8.0",
+        "vgirol/jsonapi-constant": "dev-master",
         "vgirol/jsonapi-assert": "dev-master"
     },
     "require-dev": {
         "infection/infection": "^0.14",
+        "vgirol/jsonapi-faker": "dev-master",
         "vgirol/jsonapi-faker-laravel": "dev-master"
     },
     "repositories": [
+        {
+            "type": "path",
+            "url": "../JsonApi-Constant",
+            "options": {
+                "symlink": true
+            }
+        },
         {
             "type": "path",
             "url": "../JsonApi-Assert",
@@ -51,8 +60,7 @@
             }
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "VGirol\\JsonApiAssert\\Laravel\\": "src/"

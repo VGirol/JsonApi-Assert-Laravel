@@ -5,7 +5,7 @@ namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\Messages;
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * This trait adds the ability to test pagination informations (links and meta).
