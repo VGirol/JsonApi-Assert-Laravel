@@ -13,7 +13,7 @@ trait AssertIncluded
      * Asserts that an include object contains an expected collection.
      *
      * @param TestResponse $response
-     * @param array<array> $expected
+     * @param array        $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

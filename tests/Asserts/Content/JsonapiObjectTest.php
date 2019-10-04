@@ -29,7 +29,7 @@ class JsonapiObjectTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertResponseJsonapiObjectEquals($response, $doc->jsonapi->toArray());
+        Assert::assertResponseJsonapiObjectEquals($response, $doc->getJsonapi()->toArray());
     }
 
     /**

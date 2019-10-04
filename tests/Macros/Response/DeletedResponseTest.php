@@ -28,7 +28,7 @@ class DeletedResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiDeleted($doc->meta, $strict);
+        $response->assertJsonApiDeleted($doc->getMeta(), $strict);
     }
 
     /**
@@ -54,6 +54,6 @@ class DeletedResponseTest extends TestCase
 
         $this->setFailure($failureMsg);
 
-        $response->assertJsonApiDeleted($doc->meta, $strict);
+        $response->assertJsonApiDeleted($doc->getMeta(), $strict);
     }
 }

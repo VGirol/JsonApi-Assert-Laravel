@@ -27,6 +27,7 @@
     },
     "require-dev": {
         "infection/infection": "^0.14",
+        "orchestra/testbench": "~3.8|^4.0",
         "vgirol/jsonapi-faker": "dev-master",
         "vgirol/jsonapi-faker-laravel": "dev-master"
     },

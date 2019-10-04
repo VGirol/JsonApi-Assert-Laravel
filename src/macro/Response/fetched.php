@@ -6,8 +6,8 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 TestResponse::macro(
     'assertJsonApiFetchedSingleResource',
     /**
-     * @param array<string, mixed>|null $expected The expected resource object
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array|null $expected The expected resource object
+     * @param boolean    $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -20,8 +20,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiFetchedResourceCollection',
     /**
-     * @param array<string, mixed> $expected The expected collection of resource objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expected The expected collection of resource objects.
+     * @param boolean $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -34,8 +34,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiFetchedRelationships',
     /**
-     * @param array<string, mixed>|null $expected The expected collection of resource identifier objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array|null $expected The expected collection of resource identifier objects.
+     * @param boolean    $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -48,8 +48,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiPagination',
     /**
-     * @param array<string, mixed> $expectedLinks
-     * @param array<string, mixed> $expectedMeta
+     * @param array $expectedLinks
+     * @param array $expectedMeta
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -73,7 +73,7 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiContainsInclude',
     /**
-     * @param array<array> $expected
+     * @param array $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

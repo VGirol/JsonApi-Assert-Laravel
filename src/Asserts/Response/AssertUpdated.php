@@ -15,8 +15,8 @@ trait AssertUpdated
      * Asserts that a response object is a valid '200 OK' response following an update request.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected The expected updated resource object
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array        $expected The expected updated resource object
+     * @param boolean      $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

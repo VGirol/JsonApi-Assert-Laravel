@@ -6,8 +6,8 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 TestResponse::macro(
     'assertJsonApiResponse400',
     /**
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors An array of the expected error objects.
+     * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -20,8 +20,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiResponse403',
     /**
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors An array of the expected error objects.
+     * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -34,8 +34,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiResponse404',
     /**
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors An array of the expected error objects.
+     * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -48,8 +48,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiResponse406',
     /**
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors An array of the expected error objects.
+     * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -62,8 +62,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiResponse409',
     /**
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors An array of the expected error objects.
+     * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -76,8 +76,8 @@ TestResponse::macro(
 TestResponse::macro(
     'assertJsonApiResponse415',
     /**
-     * @param array<array> $expectedErrors An array of the expected error objects.
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array   $expectedErrors An array of the expected error objects.
+     * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

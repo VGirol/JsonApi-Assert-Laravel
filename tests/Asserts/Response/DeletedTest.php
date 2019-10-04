@@ -29,7 +29,7 @@ class DeletedTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertIsDeletedResponse($response, $doc->meta, $strict);
+        Assert::assertIsDeletedResponse($response, $doc->getMeta(), $strict);
     }
 
     /**

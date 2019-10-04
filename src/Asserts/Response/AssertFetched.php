@@ -15,8 +15,8 @@ trait AssertFetched
      * Asserts that the response has "200 Ok" status code and valid content.
      *
      * @param TestResponse $response
-     * @param array<string, mixed>|null $expected The expected resource object
-     * @param boolean $strict If true, unsafe characters are not allowed when checking members name.
+     * @param array|null   $expected The expected resource object
+     * @param boolean      $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

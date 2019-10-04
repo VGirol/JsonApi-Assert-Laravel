@@ -14,7 +14,7 @@ trait AssertJsonapiObject
      * Asserts that a jsonapi object equals an expected array.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected
+     * @param array       $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException

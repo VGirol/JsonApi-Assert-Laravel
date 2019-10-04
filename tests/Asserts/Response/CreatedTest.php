@@ -33,7 +33,7 @@ class CreatedTest extends TestCase
             ->setData($resFactory);
 
         if ($withLocationHeader) {
-            $headers['Location'] = $resFactory->links['self'];
+            $headers['Location'] = $resFactory->getLinks()['self'];
         }
 
         $response = Response::create($doc->toJson(), $status, $headers);

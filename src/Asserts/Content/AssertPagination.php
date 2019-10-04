@@ -39,7 +39,7 @@ trait AssertPagination
      * Asserts that a document have the expected pagination links.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected
+     * @param array        $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -81,7 +81,7 @@ trait AssertPagination
      * Asserts that a document have pagination meta.
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expected
+     * @param array        $expected
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -122,8 +122,8 @@ trait AssertPagination
      * Asserts that a document have pagination informations (links and meta).
      *
      * @param TestResponse $response
-     * @param array<string, mixed> $expectedLinks
-     * @param array<string, mixed> $expectedMeta
+     * @param array        $expectedLinks
+     * @param array        $expectedMeta
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
