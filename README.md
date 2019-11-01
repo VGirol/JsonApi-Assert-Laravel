@@ -43,7 +43,7 @@ composer require vgirol/jsonapi-assert-laravel
 
 ### Registration
 
-The package will automatically register itself.  
+The package will automatically register itself.
 If you're not using Package Discovery, add the Service Provider to your config/app.php file:
 
 ```php
