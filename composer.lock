@@ -5120,7 +5120,7 @@
             "dist": {
                 "type": "path",
                 "url": "../JsonApi-Faker-Laravel",
-                "reference": "b439853630b72b2e0b4b76c0655d21ea47dc77f7"
+                "reference": "19c2a88f0537cd85a74ef1d096b80ce819a0042d"
             },
             "require": {
                 "laravel/framework": ">=5.8",
