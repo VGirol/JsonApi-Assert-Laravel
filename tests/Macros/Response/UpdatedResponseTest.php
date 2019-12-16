@@ -15,7 +15,7 @@ class UpdatedResponseTest extends TestCase
      * @test
      * @dataProvider assertJsonApiUpdatedProvider
      */
-    public function assertJsonApiUpdated($doc, $expected, $strict)
+    public function assertJsonApiUpdated($doc, $expected, $relationship, $strict)
     {
         $status = 200;
         $headers = [
@@ -25,7 +25,7 @@ class UpdatedResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $response->assertJsonApiUpdated($expected, $strict);
+        $response->assertJsonApiUpdated($expected, $relationship, $strict);
     }
 
     public function assertJsonApiUpdatedProvider()
@@ -41,11 +41,13 @@ class UpdatedResponseTest extends TestCase
                         $resourceFactory
                     ),
                 $resourceFactory->toArray(),
+                false,
                 false
             ],
             'with meta' => [
                 (new Generator)->document()->fakeMeta(),
                 null,
+                false,
                 false
             ]
         ];
@@ -69,6 +71,7 @@ class UpdatedResponseTest extends TestCase
         $doc = (new Generator)->document()
             ->fakeJsonapi();
 
+            $relationship = false;
         $strict = false;
         $failureMsg = '/' . str_replace('%s', '.*', Messages::TOP_LEVEL_MEMBERS) . '/';
 
@@ -77,6 +80,6 @@ class UpdatedResponseTest extends TestCase
 
         $this->setFailure($failureMsg);
 
-        $response->assertJsonApiUpdated($resourceFactory->toArray(), $strict);
+        $response->assertJsonApiUpdated($resourceFactory->toArray(), $relationship, $strict);
     }
 }

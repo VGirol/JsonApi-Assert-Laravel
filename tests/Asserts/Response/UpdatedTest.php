@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class UpdatedTest extends TestCase
@@ -16,7 +17,7 @@ class UpdatedTest extends TestCase
      * @test
      * @dataProvider responseUpdatedProvider
      */
-    public function responseUpdated($content, $expected, $strict)
+    public function responseUpdated($content, $expected, $relationship, $strict)
     {
         $status = 200;
         $headers = [
@@ -26,7 +27,7 @@ class UpdatedTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        Assert::assertIsUpdatedResponse($response, $expected, $strict);
+        Assert::assertIsUpdatedResponse($response, $expected, $relationship, $strict);
     }
 
     public function responseUpdatedProvider()
@@ -34,6 +35,8 @@ class UpdatedTest extends TestCase
         $roFactory = (new Generator)->resourceObject()
             ->fake()
             ->fakeLinks();
+        $riCollection = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER | Options::FAKE_COLLECTION);
 
         return [
             'with data' => [
@@ -41,6 +44,7 @@ class UpdatedTest extends TestCase
                     ->setData($roFactory)
                     ->toJson(),
                 $roFactory->toArray(),
+                false,
                 false
             ],
             'with meta' => [
@@ -48,6 +52,15 @@ class UpdatedTest extends TestCase
                     ->fakeMeta()
                     ->toJson(),
                 null,
+                false,
+                false
+            ],
+            'with relationship' => [
+                (new Generator)->document()
+                    ->setData($riCollection)
+                    ->toJson(),
+                $riCollection->toArray(),
+                true,
                 false
             ]
         ];
@@ -57,20 +70,22 @@ class UpdatedTest extends TestCase
      * @test
      * @dataProvider responseUpdatedFailedProvider
      */
-    public function responseUpdatedFailed($status, $headers, $content, $expected, $strict, $failureMsg)
+    public function responseUpdatedFailed($status, $headers, $content, $expected, $relationship, $strict, $failureMsg)
     {
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
         $this->setFailure($failureMsg);
 
-        Assert::assertIsUpdatedResponse($response, $expected, $strict);
+        Assert::assertIsUpdatedResponse($response, $expected, $relationship, $strict);
     }
 
     public function responseUpdatedFailedProvider()
     {
         $roFactory = (new Generator)->resourceObject()
             ->fake();
+        $riCollection = (new Generator)->collection()
+            ->fake(Options::FAKE_RESOURCE_IDENTIFIER | Options::FAKE_COLLECTION);
 
         return [
             'wrong status code' => [
@@ -81,6 +96,7 @@ class UpdatedTest extends TestCase
                 (new Generator)->document()->setData($roFactory)->toJson(),
                 $roFactory->toArray(),
                 false,
+                false,
                 'Expected status code 200 but received 202.'
             ],
             'no content-type header' => [
@@ -88,6 +104,7 @@ class UpdatedTest extends TestCase
                 [],
                 (new Generator)->document()->setData($roFactory)->toJson(),
                 $roFactory->toArray(),
+                false,
                 false,
                 'Header [Content-Type] not present on response.'
             ],
@@ -98,6 +115,7 @@ class UpdatedTest extends TestCase
                 ],
                 (new Generator)->document()->setData($roFactory)->addToMeta('not safe', 'error')->toJson(),
                 $roFactory->toArray(),
+                false,
                 true,
                 Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
@@ -109,6 +127,7 @@ class UpdatedTest extends TestCase
                 (new Generator)->document()->fakeErrors()->toJson(),
                 $roFactory->toArray(),
                 false,
+                false,
                 sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['meta', 'data']))
             ],
             'data attributes member not valid' => [
@@ -119,7 +138,19 @@ class UpdatedTest extends TestCase
                 (new Generator)->document()->fakeData()->toJson(),
                 $roFactory->toArray(),
                 false,
+                false,
                 Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
+            ],
+            'data relationship not valid' => [
+                200,
+                [
+                    HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
+                ],
+                (new Generator)->document()->fakeData()->toJson(),
+                $riCollection->toArray(),
+                true,
+                false,
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }

@@ -15,8 +15,9 @@ trait AssertUpdated
      * Asserts that a response object is a valid '200 OK' response following an update request.
      *
      * @param TestResponse $response
-     * @param array        $expected The expected updated resource object
-     * @param boolean      $strict   If true, unsafe characters are not allowed when checking members name.
+     * @param array        $expected     The expected updated resource object
+     * @param boolean      $relationship If true, response content must be valid resource linkage
+     * @param boolean      $strict       If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -24,6 +25,7 @@ trait AssertUpdated
     public static function assertIsUpdatedResponse(
         TestResponse $response,
         $expected,
+        bool $relationship,
         bool $strict
     ) {
         $response->assertStatus(200);
@@ -54,12 +56,16 @@ trait AssertUpdated
         if (isset($json[Members::DATA])) {
             $data = $json[Members::DATA];
 
-            static::assertIsNotArrayOfObjects($data);
+            if ($relationship) {
+                static::assertResourceLinkageEquals($expected, $data, $strict);
+            } else {
+                static::assertIsNotArrayOfObjects($data);
 
-            static::assertResourceObjectEquals(
-                $expected,
-                $data
-            );
+                static::assertResourceObjectEquals(
+                    $expected,
+                    $data
+                );
+            }
         }
     }
 }
