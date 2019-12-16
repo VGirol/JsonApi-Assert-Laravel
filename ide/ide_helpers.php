@@ -15,8 +15,8 @@ namespace Illuminate\Foundation\Testing {
      * @method void assertJsonApiNoContent()
      *      Asserts that the response has 204 status code and no content.
      *
-     * @method void assertJsonApiUpdated(Illuminate\Database\Eloquent\Model $model, string $resourceType, boolean $strict)
-     *      Asserts that the response has 200 status code and content with primary data corresponding to the model if provided, or only "meta" member otherwise.
+     * @method void assertJsonApiUpdated(array $expected, boolean $relationship, boolean $strict)
+     *      Asserts that the response has 200 status code and content with primary data corresponding to the expected array if provided, or only "meta" member otherwise.
      *
      * @method void assertJsonApiErrorResponse(int $status, array $errors, boolean $strict)
      *      Asserts that the response has the given status code and the provided errors object.
