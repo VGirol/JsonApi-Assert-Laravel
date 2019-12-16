@@ -150,7 +150,7 @@ class UpdatedTest extends TestCase
                 $riCollection->toArray(),
                 true,
                 false,
-                Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }
