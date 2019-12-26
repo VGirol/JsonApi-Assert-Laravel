@@ -53,19 +53,24 @@ trait AssertUpdated
         );
 
         // Checks data member
-        if (isset($json[Members::DATA])) {
-            $data = $json[Members::DATA];
-
-            if ($relationship) {
-                static::assertResourceLinkageEquals($expected, $data, $strict);
-            } else {
-                static::assertIsNotArrayOfObjects($data);
-
-                static::assertResourceObjectEquals(
-                    $expected,
-                    $data
-                );
-            }
+        if (!array_key_exists(Members::DATA, $json)) {
+            return;
         }
+
+        $data = $json[Members::DATA];
+
+        // Check if the response contains resource linkage ...
+        if ($relationship) {
+            static::assertResourceLinkageEquals($expected, $data, $strict);
+
+            return;
+        }
+
+        // ... or a single resource
+        static::assertIsNotArrayOfObjects($data);
+        static::assertResourceObjectEquals(
+            $expected,
+            $data
+        );
     }
 }
