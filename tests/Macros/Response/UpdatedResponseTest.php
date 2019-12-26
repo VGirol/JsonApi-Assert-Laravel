@@ -71,7 +71,7 @@ class UpdatedResponseTest extends TestCase
         $doc = (new Generator)->document()
             ->fakeJsonapi();
 
-            $relationship = false;
+        $relationship = false;
         $strict = false;
         $failureMsg = '/' . str_replace('%s', '.*', Messages::TOP_LEVEL_MEMBERS) . '/';
 
