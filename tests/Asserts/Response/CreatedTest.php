@@ -9,6 +9,7 @@ use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Messages as LaravelMessages;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class CreatedTest extends TestCase
@@ -33,7 +34,7 @@ class CreatedTest extends TestCase
             ->setData($resFactory);
 
         if ($withLocationHeader) {
-            $headers['Location'] = $resFactory->getLinks()['self'];
+            $headers['Location'] = $resFactory->getLinks()[Members::LINK_SELF];
         }
 
         $response = Response::create($doc->toJson(), $status, $headers);
@@ -109,7 +110,7 @@ class CreatedTest extends TestCase
                 (new Generator)->document()->fakeMeta()->toJson(),
                 $resFactory->toArray(),
                 false,
-                sprintf(Messages::HAS_MEMBER, 'data')
+                sprintf(Messages::HAS_MEMBER, Members::DATA)
             ],
             'data not valid' => [
                 201,

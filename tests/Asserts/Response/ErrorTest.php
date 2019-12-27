@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class ErrorTest extends TestCase
@@ -26,7 +27,7 @@ class ErrorTest extends TestCase
 
         $errorFactory = (new Generator)->error()
             ->fake()
-            ->set('status', strval($status))
+            ->set(Members::ERROR_STATUS, strval($status))
             ->setMeta([
                 'not strict' => 'error when infection change default value for $strict parameter'
             ]);
@@ -68,12 +69,12 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'errors' => [
+                    Members::ERRORS => [
                         [
-                            'status' => '406',
-                            'title' => 'Not Acceptable',
-                            'details' => 'description',
-                            'meta' => [
+                            Members::ERROR_STATUS => '406',
+                            Members::ERROR_TITLE => 'Not Acceptable',
+                            Members::ERROR_DETAILS => 'description',
+                            Members::META => [
                                 'not strict' => 'error when infection change default value for $strict parameter'
                             ]
                         ]
@@ -82,9 +83,9 @@ class ErrorTest extends TestCase
                 406,
                 [
                     [
-                        'status' => '406',
-                        'title' => 'Not Acceptable',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '406',
+                        Members::ERROR_TITLE => 'Not Acceptable',
+                        Members::ERROR_DETAILS => 'description'
                     ]
                 ],
                 false,
@@ -96,20 +97,20 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE . '; param=value']
                 ],
                 [
-                    'errors' => [
+                    Members::ERRORS => [
                         [
-                            'status' => '406',
-                            'title' => 'Not Acceptable',
-                            'details' => 'description'
+                            Members::ERROR_STATUS => '406',
+                            Members::ERROR_TITLE => 'Not Acceptable',
+                            Members::ERROR_DETAILS => 'description'
                         ]
                     ]
                 ],
                 406,
                 [
                     [
-                        'status' => '406',
-                        'title' => 'Not Acceptable',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '406',
+                        Members::ERROR_TITLE => 'Not Acceptable',
+                        Members::ERROR_DETAILS => 'description'
                     ]
                 ],
                 false,
@@ -121,23 +122,23 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'errors' => [
+                    Members::ERRORS => [
                         [
-                            'status' => 404,
-                            'title' => 'Not Found',
-                            'details' => 'description'
+                            Members::ERROR_STATUS => 404,
+                            Members::ERROR_TITLE => 'Not Found',
+                            Members::ERROR_DETAILS => 'description'
                         ]
                     ],
-                    'meta' => [
+                    Members::META => [
                         'key+' => 'not valid'
                     ]
                 ],
                 404,
                 [
                     [
-                        'status' => '404',
-                        'title' => 'Not Found',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '404',
+                        Members::ERROR_TITLE => 'Not Found',
+                        Members::ERROR_DETAILS => 'description'
                     ]
                 ],
                 false,
@@ -149,20 +150,20 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'meta' => [
+                    Members::META => [
                         'key' => 'value'
                     ]
                 ],
                 406,
                 [
                     [
-                        'status' => '406',
-                        'title' => 'Not Acceptable',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '406',
+                        Members::ERROR_TITLE => 'Not Acceptable',
+                        Members::ERROR_DETAILS => 'description'
                     ]
                 ],
                 false,
-                sprintf(Messages::HAS_MEMBER, 'errors')
+                sprintf(Messages::HAS_MEMBER, Members::ERRORS)
             ],
             'no error' => [
                 406,
@@ -170,14 +171,14 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'errors' => []
+                    Members::ERRORS => []
                 ],
                 406,
                 [
                     [
-                        'status' => '406',
-                        'title' => 'Not Acceptable',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '406',
+                        Members::ERROR_TITLE => 'Not Acceptable',
+                        Members::ERROR_DETAILS => 'description'
                     ]
                 ],
                 false,
@@ -189,25 +190,25 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'errors' => [
+                    Members::ERRORS => [
                         [
-                            'status' => '404',
-                            'title' => 'Not Found',
-                            'details' => 'description'
+                            Members::ERROR_STATUS => '404',
+                            Members::ERROR_TITLE => 'Not Found',
+                            Members::ERROR_DETAILS => 'description'
                         ]
                     ]
                 ],
                 404,
                 [
                     [
-                        'status' => '404',
-                        'title' => 'Not Found',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '404',
+                        Members::ERROR_TITLE => 'Not Found',
+                        Members::ERROR_DETAILS => 'description'
                     ],
                     [
-                        'status' => '405',
-                        'title' => 'Not Found 2',
-                        'details' => 'description'
+                        Members::ERROR_STATUS => '405',
+                        Members::ERROR_TITLE => 'Not Found 2',
+                        Members::ERROR_DETAILS => 'description'
                     ]
                 ],
                 false,
@@ -219,20 +220,20 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'errors' => [
+                    Members::ERRORS => [
                         [
-                            'status' => '404',
-                            'title' => 'Not Found',
-                            'details' => 'description'
+                            Members::ERROR_STATUS => '404',
+                            Members::ERROR_TITLE => 'Not Found',
+                            Members::ERROR_DETAILS => 'description'
                         ]
                     ]
                 ],
                 404,
                 [
                     [
-                        'status' => '404',
-                        'title' => 'Not Found',
-                        'details' => 'another description'
+                        Members::ERROR_STATUS => '404',
+                        Members::ERROR_TITLE => 'Not Found',
+                        Members::ERROR_DETAILS => 'another description'
                     ]
                 ],
                 false,
@@ -244,12 +245,12 @@ class ErrorTest extends TestCase
                     HttpHeader::HEADER_NAME => [HttpHeader::MEDIA_TYPE]
                 ],
                 [
-                    'errors' => [
+                    Members::ERRORS => [
                         [
-                            'status' => '406',
-                            'title' => 'Not Acceptable',
-                            'details' => 'description',
-                            'meta' => [
+                            Members::ERROR_STATUS => '406',
+                            Members::ERROR_TITLE => 'Not Acceptable',
+                            Members::ERROR_DETAILS => 'description',
+                            Members::META => [
                                 'not strict' => 'error'
                             ]
                         ]
@@ -258,10 +259,10 @@ class ErrorTest extends TestCase
                 406,
                 [
                     [
-                        'status' => '406',
-                        'title' => 'Not Acceptable',
-                        'details' => 'description',
-                        'meta' => [
+                        Members::ERROR_STATUS => '406',
+                        Members::ERROR_TITLE => 'Not Acceptable',
+                        Members::ERROR_DETAILS => 'description',
+                        Members::META => [
                             'not strict' => 'error'
                         ]
                     ]

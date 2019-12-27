@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class ErrorResponseTest extends TestCase
@@ -23,7 +24,7 @@ class ErrorResponseTest extends TestCase
 
         $errorFactory = (new Generator)->error()
             ->fake()
-            ->set('status', strval($status))
+            ->set(Members::ERROR_STATUS, strval($status))
             ->setMeta([
                 'not strict' => 'error when infection change default value for $strict parameter'
             ]);
@@ -47,7 +48,7 @@ class ErrorResponseTest extends TestCase
 
         $errorFactory = (new Generator)->error()
             ->fake()
-            ->set('status', strval($status))
+            ->set(Members::ERROR_STATUS, strval($status))
             ->setMeta([
                 'not strict' => 'error when infection change default value for $strict parameter'
             ]);

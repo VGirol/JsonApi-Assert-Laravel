@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class UpdatedResponseTest extends TestCase
@@ -32,7 +33,7 @@ class UpdatedResponseTest extends TestCase
     {
         $resourceFactory = (new Generator)->resourceObject()
             ->fake()
-            ->addLink('self', 'url');
+            ->addLink(Members::LINK_SELF, 'url');
 
         return [
             'with data' => [

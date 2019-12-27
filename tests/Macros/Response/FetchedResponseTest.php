@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class FetchedResponseTest extends TestCase
@@ -46,7 +47,7 @@ class FetchedResponseTest extends TestCase
         ];
 
         $strict = true;
-        $failureMsg = sprintf(Messages::HAS_MEMBER, 'data');
+        $failureMsg = sprintf(Messages::HAS_MEMBER, Members::DATA);
 
         $resourceFactory = (new Generator)->resourceObject()
             ->fake();
@@ -95,7 +96,7 @@ class FetchedResponseTest extends TestCase
         ];
 
         $strict = false;
-        $failureMsg = sprintf(Messages::HAS_MEMBER, 'data');
+        $failureMsg = sprintf(Messages::HAS_MEMBER, Members::DATA);
 
         $resourceFactory = (new Generator)->resourceObject()
             ->fake();

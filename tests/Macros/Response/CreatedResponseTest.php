@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class CreatedResponseTest extends TestCase
@@ -52,7 +53,7 @@ class CreatedResponseTest extends TestCase
         $doc = (new Generator)->document()
             ->fakeMeta();
 
-        $failureMsg = sprintf(Messages::HAS_MEMBER, 'data');
+        $failureMsg = sprintf(Messages::HAS_MEMBER, Members::DATA);
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
