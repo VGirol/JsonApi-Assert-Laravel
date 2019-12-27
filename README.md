@@ -109,7 +109,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-travis]: https://img.shields.io/travis/VGirol/JsonApi-Assert-Laravel/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
-[ico-mutation]: https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Assert-Laravel/master
+[ico-mutation]: https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FVGirol%2FJsonApi-Assert-Laravel%2Fmaster
 [ico-downloads]: https://img.shields.io/packagist/dt/VGirol/JsonApi-Assert-Laravel.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/VGirol/JsonApi-Assert-Laravel
@@ -118,5 +118,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-code-quality]: https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert-Laravel
 [link-downloads]: https://packagist.org/packages/VGirol/JsonApi-Assert-Laravel
 [link-author]: https://github.com/VGirol
-[link-mutation]: https://infection.github.io
+[link-mutation]: https://dashboard.stryker-mutator.io/reports/github.com/VGirol/JsonApi-Assert-Laravel/master
 [link-contributors]: ../../contributors
