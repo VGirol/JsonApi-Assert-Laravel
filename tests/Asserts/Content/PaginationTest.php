@@ -129,7 +129,7 @@ class PaginationTest extends TestCase
                     ->document()
                     ->fakeMeta()
                     ->toJson(),
-                sprintf(Messages::HAS_MEMBER, 'links')
+                sprintf(Messages::HAS_MEMBER, Members::LINKS)
             ],
             'no pagination links' => [
                 (new Generator)
@@ -258,7 +258,7 @@ class PaginationTest extends TestCase
                     ->fakeLinks()
                     ->toJson(),
                 $expected,
-                sprintf(Messages::HAS_MEMBER, 'meta')
+                sprintf(Messages::HAS_MEMBER, Members::META)
             ],
             'no pagination meta' => [
                 (new Generator)

@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
@@ -70,7 +71,7 @@ class FetchedRelationshipsResponseTest extends TestCase
         ];
 
         $strict = false;
-        $failureMsg = sprintf(Messages::HAS_MEMBER, 'data');
+        $failureMsg = sprintf(Messages::HAS_MEMBER, Members::DATA);
 
         $riCollection = (new Generator)->collection()
             ->fake(Options::FAKE_RESOURCE_IDENTIFIER);

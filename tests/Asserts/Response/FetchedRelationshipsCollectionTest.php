@@ -8,6 +8,7 @@ use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
@@ -120,7 +121,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
                 (new Generator)->document()->fakeMEta()->toJson(),
                 $collectionFactory->toArray(),
                 false,
-                sprintf(Messages::HAS_MEMBER, 'data')
+                sprintf(Messages::HAS_MEMBER, Members::DATA)
             ],
             'not valid collection' => [
                 $status,

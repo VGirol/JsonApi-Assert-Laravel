@@ -9,6 +9,7 @@ use VGirol\JsonApiAssert\Laravel\HttpHeader;
 use VGirol\JsonApiAssert\Laravel\Messages as LaravelMessages;
 use VGirol\JsonApiAssert\Laravel\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Laravel\Generator;
 
 class DeletedTest extends TestCase
@@ -91,7 +92,7 @@ class DeletedTest extends TestCase
                 (new Generator)->document()->fakeJsonapi()->toJson(),
                 null,
                 false,
-                sprintf(Messages::TOP_LEVEL_MEMBERS, implode('", "', ['data', 'errors', 'meta']))
+                sprintf(Messages::TOP_LEVEL_MEMBERS, implode('", "', [Members::DATA, Members::ERRORS, Members::META]))
             ],
             'meta not as expected' => [
                 200,
