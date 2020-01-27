@@ -9,7 +9,7 @@ TestResponse::macro(
      * @param array $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected) {
         Assert::assertResponseJsonapiObjectEquals($this, $expected);

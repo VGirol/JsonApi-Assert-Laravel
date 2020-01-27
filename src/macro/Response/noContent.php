@@ -7,7 +7,7 @@ TestResponse::macro(
     'assertJsonApiNoContent',
     /**
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function () {
         Assert::assertIsNoContentResponse($this);

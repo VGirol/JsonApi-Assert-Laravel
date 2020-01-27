@@ -113,7 +113,7 @@ class FetchedRelationshipsCollectionTest extends TestCase
                 (new Generator)->document()->setData($collectionFactory)->setMeta(['not safe' => 'error'])->toJson(),
                 $collectionFactory->toArray(),
                 true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+                Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 $status,

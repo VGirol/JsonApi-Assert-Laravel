@@ -9,7 +9,7 @@ TestResponse::macro(
      * @param array $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected) {
         Assert::assertDocumentLinksObjectEquals($this, $expected);
@@ -22,7 +22,7 @@ TestResponse::macro(
      * @param array $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected) {
         Assert::assertDocumentLinksObjectContains($this, $expected);

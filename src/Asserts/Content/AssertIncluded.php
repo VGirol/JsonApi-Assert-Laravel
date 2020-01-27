@@ -16,7 +16,7 @@ trait AssertIncluded
      * @param array        $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseContainsInclude(TestResponse $response, $expected)
     {

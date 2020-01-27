@@ -10,7 +10,7 @@ TestResponse::macro(
      * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedErrors, $strict = false) {
         Assert::assertIsErrorResponse($this, 400, $expectedErrors, $strict);
@@ -24,7 +24,7 @@ TestResponse::macro(
      * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedErrors, $strict = false) {
         Assert::assertIsErrorResponse($this, 403, $expectedErrors, $strict);
@@ -38,7 +38,7 @@ TestResponse::macro(
      * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedErrors, $strict = false) {
         Assert::assertIsErrorResponse($this, 404, $expectedErrors, $strict);
@@ -52,7 +52,7 @@ TestResponse::macro(
      * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedErrors, $strict = false) {
         Assert::assertIsErrorResponse($this, 406, $expectedErrors, $strict);
@@ -66,7 +66,7 @@ TestResponse::macro(
      * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedErrors, $strict = false) {
         Assert::assertIsErrorResponse($this, 409, $expectedErrors, $strict);
@@ -80,7 +80,7 @@ TestResponse::macro(
      * @param boolean $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedErrors, $strict = false) {
         Assert::assertIsErrorResponse($this, 415, $expectedErrors, $strict);

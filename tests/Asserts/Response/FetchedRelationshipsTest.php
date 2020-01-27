@@ -108,7 +108,7 @@ class FetchedRelationshipsTest extends TestCase
                 (new Generator)->document()->setData($riFactory)->setMeta(['not+safe' => 'error'])->toJson(),
                 $riFactory->toArray(),
                 false,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+                Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 $status,

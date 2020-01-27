@@ -17,7 +17,7 @@ trait AssertJsonapiObject
      * @param array       $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseJsonapiObjectEquals(TestResponse $response, $expected)
     {

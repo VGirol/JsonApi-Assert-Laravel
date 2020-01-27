@@ -17,7 +17,7 @@ trait AssertNoContent
      * @param TestResponse $response
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertIsNoContentResponse(TestResponse $response)
     {
