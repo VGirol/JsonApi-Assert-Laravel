@@ -118,7 +118,7 @@ class UpdatedTest extends TestCase
                 $roFactory->toArray(),
                 false,
                 true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+                Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ],
             'no meta nor data member' => [
                 200,

@@ -76,7 +76,7 @@ class DeletedTest extends TestCase
                 (new Generator)->document()->setMeta(['not safe' => 'error'])->toJson(),
                 null,
                 true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+                Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ],
             'not allowed member' => [
                 200,
@@ -92,7 +92,7 @@ class DeletedTest extends TestCase
                 (new Generator)->document()->fakeJsonapi()->toJson(),
                 null,
                 false,
-                sprintf(Messages::TOP_LEVEL_MEMBERS, implode('", "', [Members::DATA, Members::ERRORS, Members::META]))
+                sprintf(Messages::DOCUMENT_TOP_LEVEL_MEMBERS, implode('", "', [Members::DATA, Members::ERRORS, Members::META]))
             ],
             'meta not as expected' => [
                 200,

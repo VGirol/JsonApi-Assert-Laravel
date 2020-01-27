@@ -74,7 +74,7 @@ class UpdatedResponseTest extends TestCase
 
         $relationship = false;
         $strict = false;
-        $failureMsg = '/' . str_replace('%s', '.*', Messages::TOP_LEVEL_MEMBERS) . '/';
+        $failureMsg = '/' . str_replace('%s', '.*', Messages::DOCUMENT_TOP_LEVEL_MEMBERS) . '/';
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);

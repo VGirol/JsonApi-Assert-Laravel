@@ -17,7 +17,7 @@ trait AssertLinks
      * @param array        $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertDocumentLinksObjectEquals(TestResponse $response, $expected)
     {
@@ -46,7 +46,7 @@ trait AssertLinks
      * @param array        $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertDocumentLinksObjectContains(TestResponse $response, $expected)
     {

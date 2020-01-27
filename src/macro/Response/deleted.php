@@ -10,7 +10,7 @@ TestResponse::macro(
      * @param boolean    $strict       If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedMeta = null, $strict = false) {
         Assert::assertIsDeletedResponse($this, $expectedMeta, $strict);

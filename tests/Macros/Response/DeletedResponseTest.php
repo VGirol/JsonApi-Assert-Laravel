@@ -47,7 +47,7 @@ class DeletedResponseTest extends TestCase
                 'result not safe' => 'failed'
             ]);
 
-        $failureMsg = Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS;
+        $failureMsg = Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS;
 
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);

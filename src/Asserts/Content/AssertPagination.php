@@ -18,7 +18,7 @@ trait AssertPagination
      * @param TestResponse $response
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseHasNoPaginationLinks(TestResponse $response): void
     {
@@ -42,7 +42,7 @@ trait AssertPagination
      * @param array        $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseHasPaginationLinks(TestResponse $response, $expected)
     {
@@ -60,7 +60,7 @@ trait AssertPagination
      * @param TestResponse $response
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseHasNoPaginationMeta(TestResponse $response): void
     {
@@ -84,7 +84,7 @@ trait AssertPagination
      * @param array        $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseHasPaginationMeta(TestResponse $response, $expected)
     {
@@ -110,7 +110,7 @@ trait AssertPagination
      * @param TestResponse $response
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseHasNoPagination(TestResponse $response)
     {
@@ -126,7 +126,7 @@ trait AssertPagination
      * @param array        $expectedMeta
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public static function assertResponseHasPagination(TestResponse $response, $expectedLinks, $expectedMeta)
     {

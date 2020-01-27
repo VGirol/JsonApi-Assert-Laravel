@@ -142,7 +142,7 @@ class ErrorTest extends TestCase
                     ]
                 ],
                 false,
-                Messages::ERROR_STATUS_IS_NOT_STRING
+                Messages::MEMBER_NAME_NOT_VALID . "\n" . Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ],
             'no errors member' => [
                 406,
@@ -268,7 +268,7 @@ class ErrorTest extends TestCase
                     ]
                 ],
                 true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+                Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }

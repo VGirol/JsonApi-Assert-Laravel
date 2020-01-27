@@ -23,7 +23,8 @@
         "laravel/framework": "~5.8.0|^6.0",
         "phpunit/phpunit": "^8.0",
         "vgirol/jsonapi-constant": "dev-master",
-        "vgirol/jsonapi-assert": "dev-master"
+        "vgirol/jsonapi-assert": "dev-master",
+        "vgirol/jsonapi-structure": "@dev"
     },
     "require-dev": {
         "infection/infection": "^0.14|^0.15",
@@ -56,6 +57,13 @@
         {
             "type": "path",
             "url": "../JsonApi-Faker-Laravel",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../JsonApi-Structure",
             "options": {
                 "symlink": true
             }

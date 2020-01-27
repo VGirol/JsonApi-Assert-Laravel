@@ -94,7 +94,7 @@ class FetchedSingleResourceTest extends TestCase
                 (new Generator)->document()->setData($roFactory)->setMeta(['not valid' => 'error'])->toJson(),
                 $roFactory->toArray(),
                 true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+                Messages::MEMBER_NAME_MUST_NOT_HAVE_RESERVED_CHARACTERS
             ],
             'no data member' => [
                 200,

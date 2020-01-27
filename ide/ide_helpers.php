@@ -59,5 +59,6 @@ namespace Illuminate\Foundation\Testing {
      * @method void assertJsonApiRelationshipsObjectEquals(Illuminate\Support\Collection $expectedCollection, string $expectedResourceType, string $expectedRelationshipName, array $resource)
      */
     class TestResponse
-    { }
+    {
+    }
 }

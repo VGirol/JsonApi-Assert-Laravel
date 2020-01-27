@@ -10,7 +10,7 @@ TestResponse::macro(
      * @param boolean    $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected, $strict = false) {
         Assert::assertFetchedSingleResourceResponse($this, $expected, $strict);
@@ -24,7 +24,7 @@ TestResponse::macro(
      * @param boolean $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected, $strict = false) {
         Assert::assertFetchedResourceCollectionResponse($this, $expected, $strict);
@@ -38,7 +38,7 @@ TestResponse::macro(
      * @param boolean    $strict   If true, unsafe characters are not allowed when checking members name.
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected, $strict = false) {
         Assert::assertFetchedRelationshipsResponse($this, $expected, $strict);
@@ -52,7 +52,7 @@ TestResponse::macro(
      * @param array $expectedMeta
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expectedLinks, $expectedMeta) {
         Assert::assertResponseHasPagination($this, $expectedLinks, $expectedMeta);
@@ -63,7 +63,7 @@ TestResponse::macro(
     'assertJsonApiNoPagination',
     /**
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function () {
         Assert::assertResponseHasNoPagination($this);
@@ -76,7 +76,7 @@ TestResponse::macro(
      * @param array $expected
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     function ($expected) {
         Assert::assertResponseContainsInclude($this, $expected);
