@@ -23,7 +23,8 @@
         "phpunit/phpunit": "^8.0",
         "laravel/framework": "~5.8|^6.0",
         "vgirol/jsonapi-constant": "dev-master",
-        "vgirol/jsonapi-assert": "dev-master"
+        "vgirol/jsonapi-assert": "dev-master",
+        "vgirol/jsonapi-structure": "@dev"
     },
     "require-dev": {
         "infection/infection": "^0.14|^0.15",
