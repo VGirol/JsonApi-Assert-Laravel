@@ -58,7 +58,7 @@ class FetchedSingleResourceTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertFetchedSingleResourceResponse($response, $expected, $strict);
     }

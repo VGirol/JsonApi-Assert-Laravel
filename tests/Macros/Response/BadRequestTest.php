@@ -61,7 +61,7 @@ class BadRequestTest extends TestCase
         $response = Response::create($doc->toJson(), $status + 1, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure();
+        $this->setAssertionFailure();
 
         $fn = "assertJsonApiResponse{$status}";
         $response->{$fn}([$errorFactory->toArray()]);

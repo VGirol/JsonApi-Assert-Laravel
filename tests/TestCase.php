@@ -3,8 +3,9 @@
 namespace VGirol\JsonApiAssert\Laravel\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use PHPUnit\Framework\AssertionFailedError;
 use VGirol\JsonApiAssert\Laravel\JsonApiAssertServiceProvider;
-use VGirol\JsonApiAssert\SetExceptionsTrait;
+use VGirol\PhpunitException\SetExceptionsTrait;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -22,5 +23,10 @@ abstract class TestCase extends BaseTestCase
         return [
             JsonApiAssertServiceProvider::class
         ];
+    }
+
+    public function setAssertionFailure(?string $message = null, $code = null): void
+    {
+        $this->setFailure(AssertionFailedError::class, $message, $code);
     }
 }
