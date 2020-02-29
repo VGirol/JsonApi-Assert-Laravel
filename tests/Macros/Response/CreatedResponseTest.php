@@ -58,7 +58,7 @@ class CreatedResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiCreated($roFactory->toArray(), $strict);
     }

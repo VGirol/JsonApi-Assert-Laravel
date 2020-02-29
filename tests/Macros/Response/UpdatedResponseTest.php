@@ -79,7 +79,7 @@ class UpdatedResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiUpdated($resourceFactory->toArray(), $relationship, $strict);
     }

@@ -52,7 +52,7 @@ class FetchedCollectionTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertFetchedResourceCollectionResponse($response, $expected, $strict);
     }
@@ -122,7 +122,7 @@ class FetchedCollectionTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertFetchedResourceCollectionResponse($response, $collectionfactory->toArray(), $strict);
     }

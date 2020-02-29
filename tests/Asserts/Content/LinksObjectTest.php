@@ -46,7 +46,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiDocumentLinksObjectEquals($expected);
     }
@@ -130,7 +130,7 @@ class LinksObjectTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiDocumentLinksObjectContains($expected);
     }

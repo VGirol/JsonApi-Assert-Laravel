@@ -69,7 +69,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure(sprintf(Messages::NOT_HAS_MEMBER, Members::LINK_PAGINATION_LAST));
+        $this->setAssertionFailure(sprintf(Messages::NOT_HAS_MEMBER, Members::LINK_PAGINATION_LAST));
 
         Assert::assertResponseHasNoPaginationLinks($response);
     }
@@ -116,7 +116,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertResponseHasPaginationLinks($response, $expected);
     }
@@ -196,7 +196,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure(sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION));
+        $this->setAssertionFailure(sprintf(Messages::NOT_HAS_MEMBER, Members::META_PAGINATION));
 
         Assert::assertResponseHasNoPaginationMeta($response);
     }
@@ -240,7 +240,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertResponseHasPaginationMeta($response, $expected);
     }
@@ -325,7 +325,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertResponseHasPagination($response, $expectedLinks, $expectedMeta);
     }
@@ -403,7 +403,7 @@ class PaginationTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertResponseHasNoPagination($response);
     }

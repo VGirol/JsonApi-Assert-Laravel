@@ -76,7 +76,7 @@ class UpdatedTest extends TestCase
         $response = Response::create($content, $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertIsUpdatedResponse($response, $expected, $relationship, $strict);
     }

@@ -57,7 +57,7 @@ class FetchedResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiFetchedSingleResource($resourceFactory->toArray(), $strict);
     }
@@ -106,7 +106,7 @@ class FetchedResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiFetchedResourceCollection($resourceFactory->toArray(), $strict);
     }

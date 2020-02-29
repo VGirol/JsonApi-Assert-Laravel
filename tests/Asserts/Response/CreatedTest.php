@@ -64,7 +64,7 @@ class CreatedTest extends TestCase
         $response = Response::create($content, $code, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertIsCreatedResponse($response, $expected, $strict);
     }

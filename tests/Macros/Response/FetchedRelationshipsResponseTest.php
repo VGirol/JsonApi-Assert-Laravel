@@ -81,7 +81,7 @@ class FetchedRelationshipsResponseTest extends TestCase
         $response = Response::create($doc->toJson(), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         $response->assertJsonApiFetchedRelationships($riCollection->toArray(), $strict);
     }

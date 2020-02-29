@@ -55,7 +55,7 @@ class ErrorTest extends TestCase
         $response = Response::create(json_encode($content), $status, $headers);
         $response = TestResponse::fromBaseResponse($response);
 
-        $this->setFailure($failureMsg);
+        $this->setAssertionFailure($failureMsg);
 
         Assert::assertIsErrorResponse($response, $expectedStatus, $expectedErrors, $strict);
     }
