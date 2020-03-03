@@ -8,7 +8,7 @@
 [![Infection MSI][ico-mutation]][link-mutation]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This package adds a lot of methods to the [`Illuminate\Foundation\Testing\TestResponse`](https://laravel.com/api/5.8/Illuminate/Foundation/Testing/TestResponse.html) class for testing APIs that implements the [JSON:API specification](https://jsonapi.org/).
+This package adds a lot of methods to the [`Illuminate\Testing\TestResponse`](https://laravel.com/api/5.8/Illuminate/Foundation/Testing/TestResponse.html) class for testing APIs that implements the [JSON:API specification](https://jsonapi.org/).
 
 ## Table of content
 

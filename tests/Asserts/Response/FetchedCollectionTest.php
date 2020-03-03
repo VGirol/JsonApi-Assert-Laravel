@@ -2,7 +2,7 @@
 
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
