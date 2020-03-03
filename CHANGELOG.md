@@ -13,3 +13,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Added new parameter to `TestResponse::assertJsonApiUpdated` and `Assert::assertIsUpdatedResponse` methods to check the response of a relationship update.
+
+## 1.2.0 - 2020-03-03
+
+### Added
+
+- Use of `VGirol/JsonApi-Structure` package.
