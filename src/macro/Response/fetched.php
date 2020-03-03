@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use VGirol\JsonApiAssert\Laravel\Assert;
 
 TestResponse::macro(
