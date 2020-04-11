@@ -2,7 +2,7 @@
 
 namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 
-use Illuminate\Testing\TestResponse;
+use Illuminate\Foundation\Testing\TestResponse;
 
 /**
  * This trait adds the ability to test included collection.

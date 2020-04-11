@@ -16,7 +16,7 @@ This package adds a lot of methods to the [`Illuminate\Testing\TestResponse`](ht
 
 - PHP 7.2+
 - PHPUnit 8.0+
-- Laravel 5.8+
+- Laravel 5.8 & 6
 - JsonApi-Assert
 
 ## Installation

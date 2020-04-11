@@ -2,7 +2,7 @@
 
 namespace VGirol\JsonApiAssert\Laravel\Tests\Asserts\Response;
 
-use Illuminate\Testing\TestResponse;
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
 use VGirol\JsonApiAssert\Laravel\Assert;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
@@ -92,7 +92,10 @@ class DeletedTest extends TestCase
                 (new Generator)->document()->fakeJsonapi()->toJson(),
                 null,
                 false,
-                sprintf(Messages::DOCUMENT_TOP_LEVEL_MEMBERS, implode('", "', [Members::DATA, Members::ERRORS, Members::META]))
+                sprintf(
+                    Messages::DOCUMENT_TOP_LEVEL_MEMBERS,
+                    implode('", "', [Members::DATA, Members::ERRORS, Members::META])
+                )
             ],
             'meta not as expected' => [
                 200,

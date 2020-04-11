@@ -2,7 +2,7 @@
 
 namespace VGirol\JsonApiAssert\Laravel\Asserts\Content;
 
-use Illuminate\Testing\TestResponse;
+use Illuminate\Foundation\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Laravel\Messages;
 use VGirol\JsonApiConstant\Members;

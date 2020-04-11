@@ -19,15 +19,15 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.2",
         "phpunit/phpunit": "^8.5|^9.0",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^5.8|^6.0",
         "vgirol/jsonapi-assert": "^1.0|dev-master",
         "vgirol/jsonapi-structure": "dev-master"
     },
     "require-dev": {
         "infection/infection": "~0.14",
-        "orchestra/testbench": "^5.0",
+        "orchestra/testbench": "^3.0|^4.0",
         "vgirol/jsonapi-faker": "^1.0|dev-master",
         "vgirol/jsonapi-faker-laravel": "dev-master",
         "vgirol/phpunit-exception": "~1.0.0|dev-master"
