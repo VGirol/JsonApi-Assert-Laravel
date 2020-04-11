@@ -20,7 +20,13 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 - Use of `VGirol/JsonApi-Structure` package.
 
-## 2.0.0 - 2020-03-03
+## 1.2.1 - 2020-04-12
+
+### Added
+
+- Fix some packages versions.
+
+## 2.0.0 - 2020-04-12
 
 ### Added
 
