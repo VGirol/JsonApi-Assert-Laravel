@@ -28,7 +28,7 @@
     "require-dev": {
         "infection/infection": "~0.14",
         "orchestra/testbench": "^5.0",
-        "vgirol/jsonapi-faker": "^1.0|dev-master",
+        "vgirol/jsonapi-faker": "~1.0.0|dev-master",
         "vgirol/jsonapi-faker-laravel": "dev-master",
         "vgirol/phpunit-exception": "~1.0.0|dev-master"
     },
