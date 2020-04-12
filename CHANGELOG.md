@@ -25,3 +25,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Fix some packages versions.
+
+## 1.2.2 - 2020-04-12
+
+### Added
+
+- Updated branch alias in composer.json
