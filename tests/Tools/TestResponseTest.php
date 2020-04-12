@@ -3,7 +3,6 @@
 namespace VGirol\JsonApiAssert\Laravel\Tests\Macros\Response;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Laravel\HttpHeader;
@@ -31,7 +30,7 @@ class TestResponseTest extends TestCase
         $doc = (new Generator)->document();
 
         $response = $this->createTestResponse(
-            JsonResponse::create($doc->toJson(), $actual, $headers)
+            JsonResponse::create($doc->toArray(), $actual, $headers)
         );
 
         $obj = $response->assertStatus($expected);
@@ -56,7 +55,7 @@ class TestResponseTest extends TestCase
         $message = sprintf(TestResponse::ERROR_STATUS, $expected, $actual);
 
         $response = $this->createTestResponse(
-            JsonResponse::create($doc->toJson(), $actual, $headers)
+            JsonResponse::create($doc->toArray(), $actual, $headers)
         );
 
         $this->setFailure(ExpectationFailedException::class, $message);
