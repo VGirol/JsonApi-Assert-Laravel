@@ -37,3 +37,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Updated branch alias in composer.json
+
+## 2.0.2 - 2020-04-12
+
+### Added
+
+- Simplify dependencies version
