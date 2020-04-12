@@ -31,3 +31,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Add support for Laravel 7.
+
+## 2.0.1 - 2020-04-12
+
+### Added
+
+- Updated branch alias in composer.json
