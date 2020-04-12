@@ -31,3 +31,4 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Updated branch alias in composer.json
+- simplify dependencies version
