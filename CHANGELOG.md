@@ -32,3 +32,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 - Updated branch alias in composer.json
 - simplify dependencies version
+
+## 1.3.0 - 2020-04-13
+
+### Added
+
+- Added customized TestResponse class
