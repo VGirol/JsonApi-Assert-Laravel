@@ -2,9 +2,9 @@
 
 namespace VGirol\JsonApiAssert\Laravel;
 
+use Illuminate\Foundation\Testing\Assert;
+use Illuminate\Foundation\Testing\TestResponse as IlluminateTestResponse;
 use Illuminate\Support\Arr;
-use Illuminate\Testing\Assert;
-use Illuminate\Testing\TestResponse as IlluminateTestResponse;
 
 class TestResponse extends IlluminateTestResponse
 {

@@ -38,3 +38,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Added customized TestResponse class
+
+## 1.3.1 - 2020-04-13
+
+### Added
+
+- Fix TestResponse namespaces
