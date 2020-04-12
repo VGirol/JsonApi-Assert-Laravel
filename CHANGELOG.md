@@ -43,3 +43,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Simplify dependencies version
+
+## 2.1.0 - 2020-04-13
+
+### Added
+
+- Added customized TestResponse class
