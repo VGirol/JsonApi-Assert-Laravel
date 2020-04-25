@@ -75,7 +75,7 @@ public function my_first_test()
 
 ## Documentation
 
-The API documentation is available in XHTML format at the url [http://jsonapi-assert-laravel.girol.fr/docs/index.xhtml](http://jsonapi-assert-laravel.girol.fr/docs/index.xhtml).
+The API documentation is available in XHTML format at the url [http://jsonapi-assert-laravel.girol.fr/docs/ref/index.html](http://jsonapi-assert-laravel.girol.fr/docs/ref/index.html).
 
 ## Change log
 
