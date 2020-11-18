@@ -49,3 +49,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Added customized TestResponse class
+
+## 2.1.1 - 2020-11-18
+
+### Added
+
+- Add support to Laravel 8
