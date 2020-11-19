@@ -48,7 +48,7 @@
         "post-update-cmd": [
             "@setup"
         ],
-        "test": "./vendor/bin/phpunit tests ",
+        "test": "./vendor/bin/phpunit tests",
         "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json --min-msi=70 --min-covered-msi=70",
         "travis": [
             "@test",
