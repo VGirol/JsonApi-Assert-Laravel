@@ -20,14 +20,14 @@
     ],
     "require": {
         "php": "^7.3",
-        "phpunit/phpunit": "^8.0|^9.0",
-        "laravel/framework": "^8.0",
-        "vgirol/jsonapi-assert": "^1.2|dev-master",
+        "phpunit/phpunit": "^9.0",
+        "laravel/framework": "^5.8|^6.0|^7.0|^8.0",
+        "vgirol/jsonapi-assert": "dev-master",
         "vgirol/jsonapi-structure": "dev-master"
     },
     "require-dev": {
         "infection/infection": "~0.14",
-        "orchestra/testbench": "^5.0|^6.0",
+        "orchestra/testbench": "~3.8|^4.0|^5.0|^6.0",
         "vgirol/jsonapi-faker": "dev-master",
         "vgirol/jsonapi-faker-laravel": "dev-master",
         "vgirol/phpunit-exception": "dev-master"

@@ -55,3 +55,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Add support to Laravel 8
+
+## 2.2.0 - 2020-11-19
+
+### Added
+
+- Fix some dependencies version
