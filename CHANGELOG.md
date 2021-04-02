@@ -61,3 +61,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Fix some dependencies version
+
+## 2.2.1 - 2021-04-02
+
+### Added
+
+- Change infection configuration

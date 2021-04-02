@@ -19,6 +19,5 @@
     "testFramework":"phpunit",
     "phpUnit": {
         "configDir": "."
-    },
-    "testFrameworkOptions": "-vvv"
+    }
 }
