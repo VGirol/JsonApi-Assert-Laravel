@@ -67,3 +67,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Change infection configuration
+
+## 2.3.0 - 2021-04-05
+
+### Added
+
+- Add support for PHP 8

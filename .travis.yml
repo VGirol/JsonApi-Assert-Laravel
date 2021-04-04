@@ -4,6 +4,7 @@ language: php
 php:
   - 7.3
   - 7.4
+  - 8.0
 
 cache:
   directories:
@@ -13,6 +14,7 @@ matrix:
   fast_finish: true
 
 before_script:
+  - export XDEBUG_MODE=coverage
   - travis_retry composer self-update
   - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-dist
   - mkdir -p build/coverage

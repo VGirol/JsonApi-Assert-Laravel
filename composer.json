@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "phpunit/phpunit": "^9.0",
         "laravel/framework": "^5.8|^6.0|^7.0|^8.0",
         "vgirol/jsonapi-assert": "dev-master",
@@ -65,7 +65,7 @@
             ]
         },
         "branch-alias": {
-            "dev-master": "2.1-dev"
+            "dev-master": "2.3-dev"
         }
     },
     "config": {
